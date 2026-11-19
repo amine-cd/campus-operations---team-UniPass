@@ -1,0 +1,2518 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniPass - Campus Operations Platform [Windows 7 Aero Edition]</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* ========================================================
+       WINDOWS 7 AERO GLASS THEME SYSTEM
+       ======================================================== */
+    :root {
+      --win7-font: "Segoe UI", Tahoma, Arial, sans-serif;
+      --aero-glass-bg: rgba(185, 218, 255, 0.42);
+      --aero-glass-border: rgba(255, 255, 255, 0.75);
+      --aero-glass-shadow: rgba(0, 30, 80, 0.45);
+      --win7-content-bg: #f0f3f7;
+      --win7-border-dark: #707070;
+      --win7-border-light: #d9dfe5;
+    }
+
+    body {
+      font-family: var(--win7-font);
+      /* Windows 7 Iconic Harmony Wallpaper Aesthetic */
+      background: radial-gradient(circle at 50% 25%, #3d92ec 0%, #2065b7 38%, #144988 72%, #0a254a 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #1e293b;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* Windows 7 Aero Glass Container */
+    .aero-window-frame {
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.65) 0%, 
+        rgba(215, 235, 255, 0.45) 8%, 
+        rgba(175, 210, 250, 0.35) 25%, 
+        rgba(150, 195, 245, 0.38) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 14px 45px rgba(0, 25, 70, 0.55), 
+                  0 2px 10px rgba(0, 0, 0, 0.35), 
+                  inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                  inset 0 -1px 0 rgba(160, 200, 240, 0.6);
+      border-radius: 8px 8px 0 0;
+    }
+
+    .aero-glass-panel {
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.55) 0%, 
+        rgba(225, 240, 255, 0.35) 40%, 
+        rgba(185, 218, 250, 0.28) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 6px rgba(0, 30, 70, 0.15);
+    }
+
+    /* Title Bar Glowing Text */
+    .aero-title-glow {
+      color: #0f2747;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 1), 
+                   0 0 6px #badeff, 
+                   1px 1px 1px rgba(255, 255, 255, 0.8);
+      font-weight: 700;
+    }
+
+    /* Windows 7 Window Controls (Min, Max, Close) */
+    .win7-ctrl-btn {
+      width: 28px;
+      height: 19px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0 0 3px 3px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-top: none;
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.7) 0%, 
+        rgba(255, 255, 255, 0.2) 49%, 
+        rgba(200, 225, 255, 0.15) 50%, 
+        rgba(210, 235, 255, 0.4) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .win7-ctrl-btn:hover {
+      background: linear-gradient(180deg, #f2f9ff 0%, #c4e4fc 50%, #89cbf7 51%, #aee0fd 100%);
+      box-shadow: 0 0 8px #78bef0, inset 0 1px 0 #fff;
+      border-color: #3c7fb1;
+    }
+    .win7-ctrl-btn:active {
+      background: linear-gradient(180deg, #a4d3ee 0%, #8fc8eb 50%, #76bce4 51%, #95d0f1 100%);
+    }
+
+    .win7-ctrl-close {
+      width: 46px;
+      background: linear-gradient(180deg, 
+        rgba(255, 210, 210, 0.5) 0%, 
+        rgba(255, 150, 150, 0.2) 49%, 
+        rgba(230, 100, 100, 0.2) 50%, 
+        rgba(240, 140, 140, 0.4) 100%);
+    }
+    .win7-ctrl-close:hover {
+      background: linear-gradient(180deg, #ff9e9e 0%, #f75555 49%, #e22525 50%, #bd1111 100%) !important;
+      border-color: #7b0000 !important;
+      box-shadow: 0 0 10px #f44e4e, inset 0 1px 0 #ffcccc !important;
+    }
+    .win7-ctrl-close:hover svg {
+      color: #ffffff;
+    }
+
+    /* Windows 7 Authentic Push Buttons */
+    .win7-btn {
+      font-family: var(--win7-font);
+      background: linear-gradient(180deg, #f5f5f5 0%, #e9e9e9 49%, #dedede 50%, #cfcfcf 100%);
+      border: 1px solid #707070;
+      border-radius: 3px;
+      box-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 #bcbcbc, 0 1px 2px rgba(0,0,0,0.15);
+      color: #1e1e1e;
+      cursor: pointer;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+      transition: all 0.12s ease;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .win7-btn:hover {
+      background: linear-gradient(180deg, #f2f9fe 0%, #e1f1fb 49%, #c4e4f8 50%, #a4d8f5 100%);
+      border-color: #3c7fb1;
+      box-shadow: inset 0 0 3px #d6effc, 0 1px 3px rgba(60, 127, 177, 0.35);
+      color: #0c3355;
+    }
+    .win7-btn:active {
+      background: linear-gradient(180deg, #c4e3f6 0%, #9dd3f2 49%, #81c3ea 50%, #76bae6 100%);
+      border-color: #2c628b;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+      color: #051d33;
+    }
+
+    /* Windows 7 Default Pulse Action Button */
+    .win7-btn-default {
+      background: linear-gradient(180deg, #e3f4fd 0%, #c4e8fc 49%, #9dd5f6 50%, #78bef0 100%);
+      border: 1px solid #3382c6;
+      box-shadow: inset 0 1px 0 #ffffff, 0 0 6px rgba(51, 130, 198, 0.45);
+      color: #0a355c;
+      font-weight: 600;
+    }
+    .win7-btn-default:hover {
+      background: linear-gradient(180deg, #ebf7fe 0%, #d4effd 49%, #b1e0f9 50%, #8fc9f3 100%);
+      border-color: #1a6ab3;
+      box-shadow: 0 0 8px rgba(35, 137, 218, 0.7), inset 0 1px 0 #fff;
+    }
+
+    /* Windows 7 Danger / Warning Button */
+    .win7-btn-danger {
+      background: linear-gradient(180deg, #fee2e2 0%, #fca5a5 49%, #f87171 50%, #ef4444 100%);
+      border: 1px solid #b91c1c;
+      box-shadow: inset 0 1px 0 #fecaca, 0 1px 2px rgba(185, 28, 28, 0.3);
+      color: #450a0a;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+    }
+    .win7-btn-danger:hover {
+      background: linear-gradient(180deg, #fecaca 0%, #f87171 49%, #ef4444 50%, #dc2626 100%);
+      border-color: #991b1b;
+      box-shadow: 0 0 8px rgba(220, 38, 38, 0.5), inset 0 1px 0 #fff;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+    }
+
+    /* Windows 7 Property Sheet Tabs */
+    .win7-tab {
+      background: linear-gradient(180deg, #eef4f9 0%, #dbe7f2 100%);
+      border: 1px solid #a3b8cc;
+      border-bottom: none;
+      border-radius: 4px 4px 0 0;
+      color: #2c4763;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      margin-right: 2px;
+      transition: all 0.15s ease;
+      box-shadow: inset 0 1px 0 #ffffff;
+    }
+    .win7-tab:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #eaf2f9 100%);
+      color: #102e4d;
+    }
+    .win7-tab.active {
+      background: linear-gradient(180deg, #ffffff 0%, #f5f8fb 100%);
+      border-color: #7b9bb9;
+      color: #0b2238;
+      padding-top: 7px;
+      margin-top: -1px;
+      z-index: 10;
+      box-shadow: inset 0 2px 0 #ffaa22, inset 0 3px 0 #ffe088, inset 0 1px 0 #ffffff;
+    }
+
+    /* Windows 7 Explorer Address Bar */
+    .win7-address-bar {
+      background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
+      border: 1px solid #7da2ce;
+      border-radius: 2px;
+      box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      height: 26px;
+      padding: 0 6px;
+      font-size: 11px;
+      color: #334155;
+    }
+
+    /* Windows 7 GroupBox (Etched Border) */
+    .win7-groupbox {
+      border: 1px solid #d3dbe3;
+      border-radius: 4px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 12px;
+      position: relative;
+    }
+    .win7-groupbox-legend {
+      font-size: 12px;
+      font-weight: 700;
+      color: #004499;
+      padding: 0 6px;
+      text-shadow: 0 1px 0 #fff;
+    }
+
+    /* Windows 7 Animated Green Progress Bar */
+    .win7-progress-track {
+      background: linear-gradient(180deg, #e0e4e8 0%, #c8ced4 50%, #d8dde2 100%);
+      border: 1px solid #8e97a0;
+      border-radius: 3px;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
+      height: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+    .win7-progress-fill {
+      height: 100%;
+      background: linear-gradient(180deg, 
+        #d8f8b8 0%, 
+        #8ae234 49%, 
+        #65c617 50%, 
+        #82dd2e 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(0,0,0,0.15);
+      border-radius: 2px;
+      position: relative;
+      transition: width 0.4s ease;
+    }
+    .win7-progress-fill::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.3) 0px,
+        rgba(255, 255, 255, 0.3) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+      animation: candyStripe 2s linear infinite;
+    }
+    @keyframes candyStripe {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 0; }
+    }
+
+    /* Desk Tile Styles (Skeuomorphic Aero Tiles) */
+    .desk-tile {
+      border-radius: 5px;
+      border: 1px solid;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.85);
+      transition: all 0.15s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .desk-tile::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 48%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.05) 100%);
+      pointer-events: none;
+      border-radius: 4px 4px 0 0;
+    }
+    .desk-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(0,30,80,0.2), inset 0 1px 0 rgba(255,255,255,0.95);
+    }
+
+    /* Desk Tile Themes */
+    .desk-available {
+      background: linear-gradient(180deg, #f2fbf4 0%, #d8f5dc 49%, #b7ecc0 50%, #a2e4ac 100%);
+      border-color: #55b86b;
+      color: #115e21;
+    }
+    .desk-occupied {
+      background: linear-gradient(180deg, #fef4f4 0%, #fbd5d5 49%, #f8adad 50%, #f69494 100%);
+      border-color: #d9534f;
+      color: #781715;
+    }
+    .desk-ghost {
+      background: linear-gradient(180deg, #fffdf2 0%, #fef3c7 49%, #fde68a 50%, #fbd34d 100%);
+      border-color: #d97706;
+      color: #78350f;
+      animation: ghostAeroPulse 1.8s infinite ease-in-out;
+    }
+    @keyframes ghostAeroPulse {
+      0% { box-shadow: 0 0 0 rgba(217, 119, 6, 0); }
+      50% { box-shadow: 0 0 12px rgba(217, 119, 6, 0.65); border-color: #b45309; }
+      100% { box-shadow: 0 0 0 rgba(217, 119, 6, 0); }
+    }
+    .desk-mine {
+      background: linear-gradient(180deg, #f0f8ff 0%, #cde7fe 49%, #a6d4fd 50%, #85c2fa 100%);
+      border-color: #1d72b8;
+      color: #0c3860;
+      box-shadow: 0 0 10px rgba(29, 114, 184, 0.7), inset 0 1px 0 #fff;
+    }
+
+    /* Windows 7 Details View Table */
+    .win7-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 12px;
+    }
+    .win7-table th {
+      background: linear-gradient(180deg, #fbfcfd 0%, #f1f4f8 49%, #e6ecf2 50%, #dbe3eb 100%);
+      border-right: 1px solid #c0cbd6;
+      border-bottom: 1px solid #abb8c5;
+      border-top: 1px solid #ffffff;
+      padding: 5px 8px;
+      font-weight: 600;
+      color: #2d4359;
+      text-align: left;
+      text-shadow: 0 1px 0 #fff;
+    }
+    .win7-table th:last-child {
+      border-right: none;
+    }
+    .win7-table td {
+      padding: 5px 8px;
+      border-bottom: 1px solid #edf2f7;
+      color: #334155;
+    }
+    .win7-table tr:nth-child(even) td {
+      background-color: #f8fafc;
+    }
+    .win7-table tr:hover td {
+      background-color: #e5f3ff !important;
+      color: #0b2f54;
+    }
+
+    /* Windows 7 Glossy Badges */
+    .win7-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+    .win7-badge-green {
+      background: linear-gradient(180deg, #dcfce7 0%, #86efac 100%);
+      border-color: #22c55e;
+      color: #14532d;
+    }
+    .win7-badge-amber {
+      background: linear-gradient(180deg, #fef3c7 0%, #fcd34d 100%);
+      border-color: #f59e0b;
+      color: #78350f;
+    }
+    .win7-badge-red {
+      background: linear-gradient(180deg, #fee2e2 0%, #fca5a5 100%);
+      border-color: #ef4444;
+      color: #7f1d1d;
+    }
+    .win7-badge-blue {
+      background: linear-gradient(180deg, #e0f2fe 0%, #7dd3fc 100%);
+      border-color: #0284c7;
+      color: #0c4a6e;
+    }
+
+    /* Windows 7 Superbar (Taskbar at Bottom) */
+    .win7-taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.45) 0%, 
+        rgba(200, 225, 255, 0.25) 12%, 
+        rgba(90, 150, 225, 0.4) 50%, 
+        rgba(30, 80, 150, 0.55) 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 -2px 10px rgba(0, 20, 60, 0.35), inset 0 1px 0 rgba(255,255,255,0.8);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px 0 0;
+    }
+
+    /* Windows 7 Start Orb */
+    .win7-start-orb {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #a4e5ff 0%, #2f94e2 40%, #155cb4 75%, #0d3e80 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5), inset 0 2px 3px rgba(255,255,255,0.9), inset 0 -2px 3px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: -6px;
+      margin-left: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .win7-start-orb:hover {
+      box-shadow: 0 0 16px #41b4ff, 0 2px 8px rgba(0,0,0,0.5), inset 0 2px 3px #ffffff;
+      transform: scale(1.04);
+    }
+    .win7-start-orb:active {
+      transform: scale(0.97);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    /* Superbar App Buttons */
+    .win7-task-item {
+      height: 32px;
+      padding: 0 10px;
+      margin: 0 2px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .win7-task-item:hover {
+      background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(200,230,255,0.2) 50%, rgba(150,200,255,0.3) 100%);
+      border-color: rgba(255,255,255,0.5);
+      box-shadow: 0 0 8px rgba(120, 200, 255, 0.6), inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .win7-task-item.active {
+      background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(180,220,255,0.3) 49%, rgba(110,180,245,0.4) 50%, rgba(80,150,230,0.5) 100%);
+      border-color: rgba(255,255,255,0.7);
+      box-shadow: 0 0 10px rgba(80, 170, 255, 0.7), inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    /* Windows 7 Aero Peek Show Desktop Button */
+    .win7-show-desktop {
+      width: 14px;
+      height: 38px;
+      border-left: 1px solid rgba(255,255,255,0.4);
+      background: linear-gradient(90deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.3) 100%);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .win7-show-desktop:hover {
+      background: rgba(255,255,255,0.5);
+      box-shadow: 0 0 10px rgba(255,255,255,0.8);
+    }
+
+    /* Windows 7 Dialog Modal (Authentic Aero Window) */
+    .win7-modal-dialog {
+      background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        rgba(225, 240, 255, 0.6) 8%, 
+        rgba(180, 215, 255, 0.45) 25%, 
+        rgba(160, 205, 250, 0.5) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 60px rgba(0, 20, 60, 0.6), 
+                  0 4px 15px rgba(0,0,0,0.35), 
+                  inset 0 1px 0 #ffffff;
+      border-radius: 8px;
+      padding: 6px;
+    }
+    .win7-modal-content {
+      background: #f0f3f7;
+      border: 1px solid #7da2ce;
+      border-radius: 4px;
+      box-shadow: inset 0 1px 0 #ffffff;
+    }
+
+    /* Windows 7 Taskbar Balloon Notification (Toast) */
+    .win7-balloon {
+      background: linear-gradient(180deg, #ffffff 0%, #ffffea 100%);
+      border: 1px solid #7a7a7a;
+      border-radius: 6px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 #ffffff;
+      color: #1e1e1e;
+      font-size: 11px;
+      position: relative;
+    }
+    .win7-balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      right: 32px;
+      border-width: 10px 10px 0 0;
+      border-style: solid;
+      border-color: #ffffea transparent;
+      display: block;
+      width: 0;
+    }
+    .win7-balloon::before {
+      content: "";
+      position: absolute;
+      bottom: -12px;
+      right: 31px;
+      border-width: 11px 11px 0 0;
+      border-style: solid;
+      border-color: #7a7a7a transparent;
+      display: block;
+      width: 0;
+    }
+
+    /* Scan Laser Animation */
+    @keyframes scanLaser {
+      0% { top: 6%; opacity: 0.9; }
+      50% { top: 92%; opacity: 1; }
+      100% { top: 6%; opacity: 0.9; }
+    }
+    .scan-laser-line {
+      animation: scanLaser 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="pb-14">
+
+  <!-- ================= MAIN WINDOW CONTAINER (WINDOWS 7 AERO APP) ================= -->
+  <div class="max-w-[1360px] mx-auto p-2 sm:p-4 mt-1 sm:mt-3">
+    
+    <div class="aero-window-frame overflow-hidden">
+      
+      <!-- ================= 1. WINDOW AERO TITLEBAR ================= -->
+      <div class="px-3 py-2 flex items-center justify-between border-b border-white/40">
+        
+        <!-- App Icon & Title -->
+        <div class="flex items-center space-x-2">
+          <!-- Windows 7 Computer / Campus Ops 3D-like Icon -->
+          <div class="w-5 h-5 rounded-sm bg-gradient-to-tr from-blue-700 via-sky-500 to-indigo-600 flex items-center justify-center shadow-sm border border-white/60">
+            <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <span class="aero-title-glow text-xs sm:text-sm tracking-normal">
+            UniPass Campus Operations v2.4 - [Kütüphane &amp; Derslik Yönetim Konsolu]
+          </span>
+        </div>
+
+        <!-- Windows 7 Min / Max / Close Control Buttons -->
+        <div class="flex items-center space-x-1">
+          <button class="win7-ctrl-btn" title="Simge Durumuna Küçült" onclick="showToast('Pencere simge durumuna küçültüldü.', 'info')">
+            <svg class="w-2.5 h-2.5 text-slate-700" fill="currentColor" viewBox="0 0 10 2">
+              <rect width="10" height="2" />
+            </svg>
+          </button>
+          <button class="win7-ctrl-btn" title="Ekranı Kapla" onclick="showToast('Tam ekran modu etkinleştirildi.', 'info')">
+            <svg class="w-2.5 h-2.5 text-slate-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 10 10">
+              <rect x="1" y="1" width="8" height="8" />
+            </svg>
+          </button>
+          <button class="win7-ctrl-btn win7-ctrl-close" title="Kapat" onclick="showToast('UniPass arka planda çalışmaya devam ediyor.', 'warning')">
+            <svg class="w-3 h-3 text-slate-800" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 12 12">
+              <line x1="2" y1="2" x2="10" y2="10" />
+              <line x1="10" y1="2" x2="2" y2="10" />
+            </svg>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ================= 2. WINDOWS 7 EXPLORER TOOLBAR & ADDRESS BAR ================= -->
+      <div class="bg-gradient-to-b from-[#f2f6fa] via-[#e6edf4] to-[#d8e2ed] border-b border-[#a6b6c6] px-3 py-1.5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2 text-xs">
+        
+        <!-- Left: Back/Forward & Breadcrumb Address Bar -->
+        <div class="flex items-center space-x-2 flex-1 max-w-xl">
+          <!-- Back & Forward Circles -->
+          <div class="flex items-center space-x-0.5">
+            <button class="w-6 h-6 rounded-full bg-gradient-to-b from-white to-[#cbdbee] border border-[#7b9abf] flex items-center justify-center text-slate-600 shadow-sm hover:from-white hover:to-[#9ec2ec]">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            <button class="w-6 h-6 rounded-full bg-gradient-to-b from-white to-[#cbdbee] border border-[#7b9abf] flex items-center justify-center text-slate-400 shadow-sm opacity-60 cursor-not-allowed">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
+
+          <!-- Windows 7 Breadcrumb Address Box -->
+          <div class="win7-address-bar flex-1 flex items-center space-x-1.5 overflow-hidden">
+            <svg class="w-3.5 h-3.5 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
+            </svg>
+            <span class="text-slate-500">Kampüs Operasyonları</span>
+            <span class="text-slate-400 text-[10px]">▶</span>
+            <span class="text-slate-700 font-semibold truncate" id="address-bar-path">UniPass Yerleşke Merkezi (1.423 Koltuk)</span>
+            <span class="ml-auto text-blue-500 hover:text-blue-700 cursor-pointer text-xs" title="Yenile" onclick="showToast('Sistem anlık verileri yenilendi.', 'success')">🗘</span>
+          </div>
+        </div>
+
+        <!-- Right: Windows 7 Command Strip (Role Switcher & Action Hub) -->
+        <div class="flex items-center space-x-1.5 flex-wrap">
+          
+          <!-- Role Switcher Segmented Control -->
+          <div class="inline-flex rounded-sm bg-[#e0e7ee] p-0.5 border border-[#9bb2cb]">
+            <button id="btn-role-student" onclick="switchRole('student')" class="role-btn win7-btn win7-btn-default text-xs font-semibold !py-1 !px-2.5">
+              🎓 Öğrenci
+            </button>
+            <button id="btn-role-faculty" onclick="switchRole('faculty')" class="role-btn win7-btn text-xs !py-1 !px-2.5">
+              👨‍🏫 Akademisyen
+            </button>
+            <button id="btn-role-admin" onclick="switchRole('admin')" class="role-btn win7-btn text-xs !py-1 !px-2.5">
+              🏢 İdari Personel
+            </button>
+          </div>
+
+          <!-- Smart QR Code Trigger -->
+          <button onclick="openQRModal('general')" class="win7-btn win7-btn-default !py-1 !px-3 font-bold flex items-center space-x-1.5 text-blue-900">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+            </svg>
+            <span>QR Kod Oku</span>
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- ================= 3. ACTIVE USER SESSION GADGET / ACTION CENTER BANNER ================= -->
+      <div id="active-session-banner" class="bg-gradient-to-r from-[#d9ebfb] via-[#e7f2fd] to-[#d9ebfb] border-b border-[#a2c5e8] px-4 py-2 shadow-inner">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-2 text-xs">
+          
+          <div class="flex items-center space-x-2">
+            <!-- Windows 7 Green LED Glowing Marble -->
+            <span class="w-3.5 h-3.5 rounded-full bg-gradient-to-b from-[#86efac] via-[#22c55e] to-[#15803d] border border-[#166534] shadow-[0_0_6px_#22c55e]"></span>
+            <span class="text-slate-700 font-semibold">Aktif Masa Oturumu:</span>
+            <span id="session-table-badge" class="font-mono font-bold text-blue-900 px-2 py-0.5 rounded bg-white border border-[#9ac2e8] shadow-sm">Masa A-14 (Sessiz Salon)</span>
+            <span class="text-slate-500 ml-1">Geçen Süre: <b id="session-elapsed" class="font-mono text-slate-800">01:42:18</b></span>
+          </div>
+
+          <div class="flex items-center space-x-2 flex-wrap">
+            <!-- Break countdown tag -->
+            <div id="break-timer-display" class="hidden items-center space-x-1.5 px-2 py-0.5 rounded bg-amber-100 border border-amber-400 text-amber-900 font-mono text-xs shadow-sm">
+              <span class="animate-spin text-amber-600">⏳</span>
+              <span>Kalan Mola: <b id="break-countdown">14:58</b></span>
+            </div>
+
+            <button id="btn-take-break" onclick="toggleStudentBreak()" class="win7-btn">
+              <span id="break-btn-text">15 Dk Mola Al</span>
+            </button>
+
+            <button onclick="simulateGhostTimeout()" title="Saha araştırmasındaki 15 dk mola ihlalini simüle eder" class="win7-btn win7-btn-danger">
+              ⚠️ Zaman Aşımını Simüle Et (+15 Dk)
+            </button>
+
+            <button onclick="checkoutStudentSession()" class="win7-btn">
+              Masayı Bırak (Çıkış)
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================= 4. WINDOWS 7 PROPERTY SHEETS (TAB STRIP) ================= -->
+      <div class="bg-[#dce6f2] px-3 pt-2 border-b border-[#7b9bb9] flex items-center justify-between">
+        
+        <div class="flex items-end space-x-0.5 overflow-x-auto">
+          <button id="tab-btn-library" onclick="switchSection('library')" class="win7-tab active flex items-center space-x-1.5">
+            <span>📚</span>
+            <span>Kütüphane &amp; Masa Yönetimi</span>
+          </button>
+          <button id="tab-btn-classrooms" onclick="switchSection('classrooms')" class="win7-tab flex items-center space-x-1.5">
+            <span>🎓</span>
+            <span>Derslik Kapasitesi &amp; Hibrit Yoklama</span>
+          </button>
+          <button id="tab-btn-analytics" onclick="switchSection('analytics')" class="win7-tab flex items-center space-x-1.5">
+            <span>📊</span>
+            <span>Operasyon &amp; Saha Analitiği</span>
+          </button>
+        </div>
+
+        <div class="text-[11px] text-slate-600 pb-1 hidden sm:flex items-center space-x-1">
+          <span class="text-slate-500">Oturum Açan:</span>
+          <span id="current-user-title" class="font-semibold text-slate-800 bg-white/70 px-2 py-0.5 rounded border border-[#b2c8de]">Ali Yılmaz (Öğrenci #20231048)</span>
+        </div>
+
+      </div>
+
+      <!-- ================= 5. MAIN CONTENT CANVAS (WINDOWS 7 EXPLORER BODY) ================= -->
+      <div class="bg-[#ffffff] p-4 sm:p-5 space-y-5 min-h-[560px]">
+
+        <!-- ================= TAB 1: KÜTÜPHANE VE MASA YÖNETİMİ ================= -->
+        <div id="section-library" class="space-y-4">
+          
+          <!-- System Information Summary Tiles (1.423 Capacity Context) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            
+            <div class="win7-groupbox">
+              <div class="text-[11px] text-slate-500 font-semibold flex justify-between">
+                <span>Toplam Kapasite</span>
+                <span class="text-blue-600 font-bold">1.423 Koltuk</span>
+              </div>
+              <div class="text-2xl font-black text-slate-800 font-mono mt-1">1.423 <span class="text-xs font-normal text-slate-500">Kapasite</span></div>
+              <div class="text-[11px] text-slate-600 mt-1.5 flex justify-between border-t border-slate-100 pt-1">
+                <span>4 Ayrı Çalışma Salonu</span>
+                <span class="text-emerald-700 font-semibold">%100 Canlı Takip</span>
+              </div>
+            </div>
+
+            <div class="win7-groupbox">
+              <div class="text-[11px] text-emerald-700 font-semibold flex justify-between">
+                <span>🟢 Müsait (Boş) Masalar</span>
+                <span class="win7-badge win7-badge-green font-mono">Boş</span>
+              </div>
+              <div class="text-2xl font-black text-emerald-700 font-mono mt-1" id="stat-available-count">279 <span class="text-xs font-normal text-slate-500">Masa</span></div>
+              <div class="text-[11px] text-slate-600 mt-1.5 flex justify-between border-t border-slate-100 pt-1">
+                <span>QR ile anında oturulabilir</span>
+                <span class="text-blue-700 hover:underline cursor-pointer font-medium" onclick="filterByStatus('available')">Yalnızca Boşlar &rarr;</span>
+              </div>
+            </div>
+
+            <div class="win7-groupbox">
+              <div class="text-[11px] text-rose-700 font-semibold flex justify-between">
+                <span>🔴 Dolu / Aktif Masalar</span>
+                <span class="win7-badge win7-badge-red font-mono">Dolu</span>
+              </div>
+              <div class="text-2xl font-black text-rose-700 font-mono mt-1" id="stat-occupied-count">1.082 <span class="text-xs font-normal text-slate-500">Kişi</span></div>
+              <div class="text-[11px] text-slate-600 mt-1.5 flex justify-between border-t border-slate-100 pt-1">
+                <span>Ort. Oturum: 2 sa 15 dk</span>
+                <span class="text-slate-500 font-medium">Pik: 10:00 - 13:00</span>
+              </div>
+            </div>
+
+            <div class="win7-groupbox bg-gradient-to-b from-white to-amber-50/60 border-amber-300">
+              <div class="text-[11px] text-amber-800 font-semibold flex justify-between">
+                <span>🟡 Hayalet İşgal / İnceleme</span>
+                <span class="win7-badge win7-badge-amber font-mono" id="ghost-count-badge">62</span>
+              </div>
+              <div class="text-2xl font-black text-amber-700 font-mono mt-1" id="stat-ghost-count">62 <span class="text-xs font-normal text-slate-500">Masa</span></div>
+              <div class="text-[11px] text-amber-900 mt-1.5 flex justify-between border-t border-amber-100 pt-1">
+                <span>15 Dk Tolerans Sayacı</span>
+                <span class="text-amber-800 underline cursor-pointer font-medium" onclick="filterByStatus('ghost_warning')">Filtrele</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Floor Plan Control Bar & Filters -->
+          <div class="win7-groupbox space-y-3">
+            
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-200">
+              
+              <!-- Zone Pill Selector Buttons -->
+              <div class="flex items-center space-x-1 overflow-x-auto pb-1 sm:pb-0">
+                <button onclick="selectZone('all')" id="zone-btn-all" class="zone-pill win7-btn win7-btn-default font-semibold">
+                  Tüm Yerleşke (1.423)
+                </button>
+                <button onclick="selectZone('A')" id="zone-btn-A" class="zone-pill win7-btn">
+                  Salon A (Sessiz - 450)
+                </button>
+                <button onclick="selectZone('B')" id="zone-btn-B" class="zone-pill win7-btn">
+                  Salon B (Prizli - 420)
+                </button>
+                <button onclick="selectZone('C')" id="zone-btn-C" class="zone-pill win7-btn">
+                  Salon C (Grup - 310)
+                </button>
+                <button onclick="selectZone('D')" id="zone-btn-D" class="zone-pill win7-btn">
+                  Salon D (Lab - 243)
+                </button>
+              </div>
+
+              <!-- Filter Controls & Search -->
+              <div class="flex flex-wrap items-center gap-2">
+                <!-- Desk ID Search Input -->
+                <div class="relative">
+                  <input type="text" id="desk-search" oninput="handleDeskSearch()" placeholder="Masa ara (örn. A-14)..." class="bg-white border border-[#7da2ce] rounded px-2.5 py-1 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-blue-500 w-40 shadow-inner">
+                </div>
+
+                <!-- Status Select -->
+                <select id="status-filter" onchange="handleFilterChange()" class="bg-white border border-[#7da2ce] rounded px-2 py-1 text-xs text-slate-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                  <option value="all">Tüm Durumlar</option>
+                  <option value="available">🟢 Yalnızca Boşlar</option>
+                  <option value="occupied">🔴 Dolular</option>
+                  <option value="ghost_warning">🟡 Hayalet İşgal / İnceleme</option>
+                </select>
+
+                <!-- Power Toggle Button -->
+                <button id="toggle-power-filter" onclick="togglePowerFilter()" class="win7-btn">
+                  <span>⚡ Prizli Masalar</span>
+                </button>
+
+                <!-- Heatmap Toggle -->
+                <button id="toggle-heatmap" onclick="toggleHeatmapView()" class="win7-btn">
+                  <span id="heatmap-btn-label">🔥 Isı Haritası</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Legend and Guidance Row -->
+            <div class="flex flex-wrap items-center justify-between text-xs text-slate-600 gap-2">
+              <div class="flex items-center space-x-3">
+                <span class="font-bold text-slate-700">Durum Göstergesi:</span>
+                <span class="flex items-center space-x-1">
+                  <span class="w-3 h-3 rounded-sm bg-[#86efac] border border-[#22c55e]"></span>
+                  <span>Boş (Müsait)</span>
+                </span>
+                <span class="flex items-center space-x-1">
+                  <span class="w-3 h-3 rounded-sm bg-[#fca5a5] border border-[#ef4444]"></span>
+                  <span>Dolu</span>
+                </span>
+                <span class="flex items-center space-x-1">
+                  <span class="w-3 h-3 rounded-sm bg-[#fde047] border border-[#eab308]"></span>
+                  <span class="font-medium text-amber-900">15 Dk Mola / İnceleme</span>
+                </span>
+                <span class="flex items-center space-x-1">
+                  <span class="w-3 h-3 rounded-sm bg-[#93c5fd] border border-[#2563eb]"></span>
+                  <span class="font-medium text-blue-900">Sizin Masanız</span>
+                </span>
+              </div>
+
+              <div class="text-[11px] text-slate-500 italic">
+                * İpucu: Masaya tıklayarak QR Check-in yapabilir, mola başlatabilir veya zaman aşımını simüle edebilirsiniz.
+              </div>
+            </div>
+
+            <!-- ================= INTERACTIVE FLOOR PLAN / DESK GRID ================= -->
+            <div class="bg-[#f8fafc] border border-[#c4d3e0] rounded p-4 relative overflow-hidden shadow-inner">
+              
+              <!-- Heatmap Overlay -->
+              <div id="heatmap-overlay" class="hidden absolute inset-0 pointer-events-none z-10 bg-gradient-to-tr from-rose-500/20 via-amber-500/15 to-emerald-500/10 backdrop-blur-[0.5px] flex items-center justify-center">
+                <div class="bg-white/95 border border-purple-400 px-4 py-2 rounded shadow-lg text-purple-900 text-xs font-bold">
+                  🔥 Canlı Kütüphane Isı Haritası: Salon A &amp; B giriş aksında %88 yoğunluk tespit edildi.
+                </div>
+              </div>
+
+              <!-- Zone Header -->
+              <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs font-bold text-slate-800" id="current-zone-heading">Salon A - Sessiz Çalışma Bölümü (450 Koltuk)</span>
+                  <span class="text-[10px] bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded font-mono">36 Modül Temsili</span>
+                </div>
+                <div class="text-xs text-slate-500">
+                  Donanım Altyapısı: <b class="text-blue-900 font-mono">220V + USB-C PD Priz</b>
+                </div>
+              </div>
+
+              <!-- Dynamic Desks Grid -->
+              <div id="desks-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-2.5">
+                <!-- Rendered dynamically -->
+              </div>
+
+              <!-- Architecture Footnotes -->
+              <div class="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between text-[11px] text-slate-500">
+                <div class="flex items-center space-x-3">
+                  <span>🚪 Ana Giriş &amp; Turnike</span>
+                  <span>📶 Eduroam Wi-Fi Beacon #LIB-04</span>
+                  <span>☕ Kafeterya Alanı</span>
+                </div>
+                <div class="text-slate-600">
+                  Sistem IoT varlık sensörleri ve 15 dk otomatik serbest bırakma algoritmasıyla desteklenmektedir.
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Field Study & Interview Validation Card -->
+          <div class="win7-groupbox bg-gradient-to-r from-blue-50/50 via-white to-amber-50/50 border-[#9ec0e2]">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div class="space-y-1">
+                <div class="flex items-center space-x-2">
+                  <span class="win7-badge win7-badge-blue">Saha Araştırması Doğrulaması</span>
+                  <h4 class="text-xs font-bold text-slate-800">Hayalet İşgal Önleme (Ghost Seat Release) Algoritması</h4>
+                </div>
+                <p class="text-xs text-slate-600 max-w-3xl leading-relaxed">
+                  Öğrencilerle yapılan saha mülakatlarında katılımcıların <b>%78'i</b> vize/final dönemlerinde saatlerce boş bırakılan eşyalı masalardan şikayetçi olmuştur. UniPass, öğrenci masadan ayrıldığında sisteme <b>15 dakikalık akıllı mola sayacı</b> işler. Süre dolduğunda masa <b>otomatik olarak boşa çıkar</b> ve sırada bekleyen diğer öğrencilere bildirilir.
+                </p>
+              </div>
+              <div class="flex items-center space-x-2 shrink-0">
+                <div class="text-center px-3 py-1.5 bg-white rounded border border-[#b8cee2] shadow-sm">
+                  <div class="text-base font-black text-emerald-700 font-mono">+%28.4</div>
+                  <div class="text-[10px] text-slate-500">Kapasite Artışı</div>
+                </div>
+                <div class="text-center px-3 py-1.5 bg-white rounded border border-[#b8cee2] shadow-sm">
+                  <div class="text-base font-black text-blue-700 font-mono">14.2 dk</div>
+                  <div class="text-[10px] text-slate-500">Ort. Geri Kazanım</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ================= TAB 2: DERSLİK KAPASİTESİ VE HİBRİT YOKLAMA ================= -->
+        <div id="section-classrooms" class="hidden space-y-4">
+          
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            
+            <!-- Left: Classrooms Live Radar -->
+            <div class="lg:col-span-1 space-y-4">
+              
+              <div class="win7-groupbox space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                  <h3 class="text-xs font-bold text-slate-800 flex items-center space-x-1.5">
+                    <span>📡</span>
+                    <span>Derslik Doluluk Durumları</span>
+                  </h3>
+                  <span class="text-[11px] text-slate-500">Canlı Radar</span>
+                </div>
+
+                <!-- Classrooms Dynamic List -->
+                <div class="space-y-2.5" id="classrooms-list">
+                  <!-- Rendered via JS -->
+                </div>
+
+                <div class="pt-2 border-t border-slate-200 text-[11px] text-slate-500 flex justify-between">
+                  <span>Toplam Kampüs Derslik: <b>42 Salon</b></span>
+                  <span class="text-emerald-700 font-medium">IoT Sensörler Aktif</span>
+                </div>
+              </div>
+
+              <!-- Student Quick Attendance Box -->
+              <div class="win7-groupbox bg-gradient-to-b from-white to-blue-50/60 border-[#9bbbdc] space-y-2.5">
+                <div class="flex items-center justify-between">
+                  <span class="win7-badge win7-badge-blue">Öğrenci Hızlı Yoklama</span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                </div>
+                <h4 class="text-xs font-bold text-slate-800">Derslik Kapısında mısınız?</h4>
+                <p class="text-xs text-slate-600">
+                  Derslik kapısındaki veya projeksiyon ekranındaki dinamik QR kodunu okutarak yoklamaya saniyeler içinde katılın.
+                </p>
+                <div class="p-2 rounded bg-white border border-[#b2c8de] text-[11px] flex justify-between">
+                  <span class="text-slate-600">📶 Geofence Ağı:</span>
+                  <span class="font-mono text-emerald-700 font-bold">EDUROAM_AMFI_1 (Onaylı)</span>
+                </div>
+                <button onclick="openQRModal('attendance')" class="w-full win7-btn win7-btn-default font-bold !py-1.5 flex items-center justify-center space-x-1">
+                  <span>📷 Derslik QR Kodunu Oku</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Right: Lecturer / Academician Management Console -->
+            <div class="lg:col-span-2 space-y-4">
+              
+              <div class="win7-groupbox space-y-4">
+                
+                <!-- Active Lecture Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-200 gap-2">
+                  <div>
+                    <div class="flex items-center space-x-2">
+                      <span class="win7-badge win7-badge-blue">Canlı Ders Oturumu</span>
+                      <span class="text-xs text-slate-500 font-mono">Derslik: <b>Amfi-1 (Mühendislik)</b></span>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mt-1">CENG 301 - Veri Tabanı Sistemleri</h3>
+                    <p class="text-xs text-slate-600">Öğretim Üyesi: <b class="text-slate-800">Doç. Dr. Selin Doğan</b> &bull; 14:00 - 15:30 (Hafta 7)</p>
+                  </div>
+
+                  <div class="flex items-center space-x-2">
+                    <button onclick="openProjectionModal()" class="win7-btn win7-btn-default font-semibold flex items-center space-x-1">
+                      <span>📽️ Projeksiyon QR Modu</span>
+                    </button>
+                    <button onclick="lockAndApproveAttendance()" id="btn-lock-attendance" class="win7-btn win7-btn-default font-bold flex items-center space-x-1 text-emerald-900">
+                      <span>✓ Yoklamayı Onayla (ÖBS)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- KPI Mini Cards -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                  <div class="p-2 rounded bg-[#f8fafc] border border-[#d2dce6]">
+                    <div class="text-[10px] text-slate-500">Kayıtlı Öğrenci</div>
+                    <div class="text-base font-black text-slate-800 font-mono">65</div>
+                  </div>
+                  <div class="p-2 rounded bg-emerald-50 border border-emerald-300">
+                    <div class="text-[10px] text-emerald-800">Katılan (QR)</div>
+                    <div class="text-base font-black text-emerald-700 font-mono" id="stat-attended-count">58</div>
+                  </div>
+                  <div class="p-2 rounded bg-amber-50 border border-amber-300">
+                    <div class="text-[10px] text-amber-800">Mazeretli</div>
+                    <div class="text-base font-black text-amber-700 font-mono" id="stat-excused-count">2</div>
+                  </div>
+                  <div class="p-2 rounded bg-rose-50 border border-rose-300">
+                    <div class="text-[10px] text-rose-800">Gelmedi (Yok)</div>
+                    <div class="text-base font-black text-rose-700 font-mono" id="stat-absent-count">5</div>
+                  </div>
+                </div>
+
+                <!-- Roll-Call List Table -->
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-xs font-bold text-slate-800">Anlık Öğrenci Katılım Çizelgesi</h4>
+                    <button onclick="addNewStudentPrompt()" class="win7-btn text-xs">
+                      + Manuel Öğrenci Ekle
+                    </button>
+                  </div>
+
+                  <!-- Details View Table -->
+                  <div class="border border-[#7da2ce] rounded overflow-x-auto shadow-sm">
+                    <table class="win7-table">
+                      <thead>
+                        <tr>
+                          <th>Öğrenci No</th>
+                          <th>Adı Soyadı</th>
+                          <th class="hidden sm:table-cell">Bölüm</th>
+                          <th>Katılım Saati</th>
+                          <th class="hidden md:table-cell">Doğrulama Metodu</th>
+                          <th>Durum</th>
+                          <th class="text-right">İşlem</th>
+                        </tr>
+                      </thead>
+                      <tbody id="attendance-tbody">
+                        <!-- Rendered via JS -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ================= TAB 3: OPERASYON VE SAHA ANALİTİĞİ ================= -->
+        <div id="section-analytics" class="hidden space-y-4">
+          
+          <!-- Top Analytical Metrics -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            
+            <div class="win7-groupbox">
+              <div class="text-[11px] text-amber-800 font-semibold flex justify-between">
+                <span>Pik Saat Analizi</span>
+                <span class="win7-badge win7-badge-amber">10:00 - 13:00</span>
+              </div>
+              <div class="text-xl font-black text-slate-800 font-mono mt-1">%89.2 <span class="text-xs font-normal text-slate-500">Pik Doluluk</span></div>
+              <p class="text-xs text-slate-600 mt-1">
+                Kütüphanenin en yoğun olduğu saat aralığında 15 dk mola algoritması ile <b>48 masa</b> hızla devir daim edilmiştir.
+              </p>
+            </div>
+
+            <div class="win7-groupbox">
+              <div class="text-[11px] text-emerald-800 font-semibold flex justify-between">
+                <span>Yoklama Hızı</span>
+                <span class="win7-badge win7-badge-green">%94 Tasarruf</span>
+              </div>
+              <div class="text-xl font-black text-emerald-700 font-mono mt-1">4.1 sn <span class="text-xs font-normal text-slate-500">/ Öğrenci</span></div>
+              <p class="text-xs text-slate-600 mt-1">
+                Geleneksel imza sirküleriyle dersin 15-20 dakikası bölünürken, UniPass hibrit QR ile 180 kişilik amfi yoklaması <b>2 dakikada</b> bitti.
+              </p>
+            </div>
+
+            <div class="win7-groupbox">
+              <div class="text-[11px] text-blue-800 font-semibold flex justify-between">
+                <span>Hayalet İşgal Önleme</span>
+                <span class="win7-badge win7-badge-blue">Bugün</span>
+              </div>
+              <div class="text-xl font-black text-blue-700 font-mono mt-1">318 Masa <span class="text-xs font-normal text-slate-500">Kurtarıldı</span></div>
+              <p class="text-xs text-slate-600 mt-1">
+                Eşya bırakıp saatlerce gelmeyenlerin masaları otomatik serbest bırakılarak sıra bekleyen öğrencilere verildi.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Windows 7 Performance Monitor Style Chart -->
+          <div class="win7-groupbox space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-slate-200 gap-2">
+              <div>
+                <h3 class="text-xs font-bold text-slate-800 flex items-center space-x-1.5">
+                  <span>📈</span>
+                  <span>Günlük Saatlik Yoğunluk Eğrisi (Kaynak İzleyicisi)</span>
+                </h3>
+                <p class="text-[11px] text-slate-500">1.423 kişilik kapasitenin 24 saatlik anlık doluluk grafiği</p>
+              </div>
+              <div class="flex items-center space-x-3 text-xs">
+                <span class="flex items-center space-x-1">
+                  <span class="w-3 h-3 rounded-sm bg-blue-500"></span>
+                  <span class="text-slate-700">Kütüphane Doluluk %</span>
+                </span>
+                <span class="flex items-center space-x-1">
+                  <span class="w-3 h-3 rounded-sm bg-amber-500"></span>
+                  <span class="text-slate-700">Hayalet İşgal Riski</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- SVG Resource Monitor Graph -->
+            <div class="w-full bg-[#0c1a29] rounded border border-[#374f68] p-2 shadow-inner overflow-x-auto">
+              <svg class="w-full h-48" viewBox="0 0 800 200" fill="none">
+                <!-- Grid Lines -->
+                <line x1="40" y1="30" x2="780" y2="30" stroke="#1e3a5f" stroke-dasharray="3" />
+                <line x1="40" y1="80" x2="780" y2="80" stroke="#1e3a5f" stroke-dasharray="3" />
+                <line x1="40" y1="130" x2="780" y2="130" stroke="#1e3a5f" stroke-dasharray="3" />
+                <line x1="40" y1="170" x2="780" y2="170" stroke="#2a4f7e" />
+
+                <!-- Y Axis Labels -->
+                <text x="12" y="34" fill="#6488b0" font-size="10" font-family="monospace">%100</text>
+                <text x="18" y="84" fill="#6488b0" font-size="10" font-family="monospace">%75</text>
+                <text x="18" y="134" fill="#6488b0" font-size="10" font-family="monospace">%50</text>
+                <text x="22" y="174" fill="#6488b0" font-size="10" font-family="monospace">%0</text>
+
+                <!-- Peak Zone Highlight (10:00 - 13:00) -->
+                <rect x="220" y="30" width="160" height="140" fill="#f59e0b" fill-opacity="0.12" rx="2" />
+                <text x="245" y="46" fill="#fbb024" font-size="10" font-weight="bold">PİK SAAT (10:00 - 13:00)</text>
+
+                <!-- Chart Gradient -->
+                <defs>
+                  <linearGradient id="win7AeroChartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.45" />
+                    <stop offset="100%" stop-color="#0284c7" stop-opacity="0.0" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Area Path -->
+                <path d="M 50 170 L 50 160 Q 120 155 180 120 T 260 55 T 340 48 T 420 70 T 500 85 T 580 65 T 660 110 T 740 160 L 740 170 Z" fill="url(#win7AeroChartGrad)" />
+
+                <!-- Smooth Curve Line -->
+                <path d="M 50 160 Q 120 155 180 120 T 260 55 T 340 48 T 420 70 T 500 85 T 580 65 T 660 110 T 740 160" stroke="#38bdf8" stroke-width="2.5" fill="none" />
+
+                <!-- Ghost Curve -->
+                <path d="M 50 168 Q 120 165 180 150 T 260 90 T 340 80 T 420 110 T 500 130 T 580 120 T 660 150 T 740 168" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="4" fill="none" />
+
+                <!-- X Axis Labels -->
+                <g font-size="10" fill="#6488b0" text-anchor="middle" font-family="monospace">
+                  <text x="50" y="188">08:00</text>
+                  <text x="140" y="188">09:00</text>
+                  <text x="220" y="188">10:00</text>
+                  <text x="300" y="188">11:00</text>
+                  <text x="380" y="188">12:00</text>
+                  <text x="460" y="188">13:00</text>
+                  <text x="540" y="188">14:00</text>
+                  <text x="620" y="188">16:00</text>
+                  <text x="700" y="188">18:00</text>
+                  <text x="760" y="188">21:00</text>
+                </g>
+
+                <circle cx="340" cy="48" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
+                <text x="340" y="38" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">%91.4</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Event Viewer Logs & Action Center Tickets -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            
+            <!-- Event Logs (Ghost Releases) -->
+            <div class="win7-groupbox space-y-2.5">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-200">
+                <h4 class="text-xs font-bold text-amber-800 flex items-center space-x-1.5">
+                  <span>📋</span>
+                  <span>Olay Günlüğü (Hayalet İşgal &amp; Zaman Aşımı)</span>
+                </h4>
+                <span class="text-[10px] text-slate-500 font-mono">Otomasyon Servisi</span>
+              </div>
+              <div class="space-y-1.5 max-h-56 overflow-y-auto pr-1" id="ghost-logs-container">
+                <!-- Rendered via JS -->
+              </div>
+            </div>
+
+            <!-- Issue Tickets / Action Center -->
+            <div class="win7-groupbox space-y-2.5">
+              <div class="flex items-center justify-between pb-2 border-b border-slate-200">
+                <h4 class="text-xs font-bold text-slate-800 flex items-center space-x-1.5">
+                  <span>🛠️</span>
+                  <span>İşlem Merkezi &amp; Arıza Yönetimi</span>
+                </h4>
+                <button onclick="createIssueModal()" class="win7-btn text-xs">
+                  + Yeni Bildirim
+                </button>
+              </div>
+              <div class="space-y-1.5 max-h-56 overflow-y-auto pr-1" id="issues-list-container">
+                <!-- Rendered via JS -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ================= 6. WINDOWS 7 STATUS BAR ================= -->
+      <div class="bg-[#ebeff3] border-t border-[#ccd5df] px-3 py-1 flex items-center justify-between text-[11px] text-slate-600">
+        <div class="flex items-center space-x-4">
+          <span class="flex items-center space-x-1">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span>UniPass IoT Ağı: <b>Bağlı</b></span>
+          </span>
+          <span>Aktif Protokol: <b>Campus-WPA2-Enterprise</b></span>
+        </div>
+        <div>
+          <span>Bölge: <b>TR / İstanbul Yerleşkesi</b></span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= WINDOWS 7 SUPERBAR (TASKBAR AT BOTTOM) ================= -->
+  <footer class="win7-taskbar">
+    
+    <div class="flex items-center space-x-1">
+      <!-- Windows 7 Start Orb -->
+      <div class="win7-start-orb" onclick="showToast('Windows 7 Başlat Menüsü: UniPass Campus Operations v2.4 devrede.', 'info')" title="Başlat">
+        <!-- 4-Colored Windows Pearl Emblem -->
+        <svg class="w-5 h-5 text-white drop-shadow" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 5.5l7-1v6.5H3V5.5zm8-1.2l9-1.3v7.5h-9V4.3zm-8 8.2h7V19l-7-1v-5.5zm8 0h9v7.5l-9-1.3v-6.2z"/>
+        </svg>
+      </div>
+
+      <!-- Pinned Active Tasks -->
+      <div class="win7-task-item active" onclick="switchSection('library')">
+        <span class="text-sm">📚</span>
+        <span class="font-semibold text-xs">UniPass Kütüphane</span>
+      </div>
+      <div class="win7-task-item" onclick="switchSection('classrooms')">
+        <span class="text-sm">🎓</span>
+        <span class="text-xs">Derslik Yoklama</span>
+      </div>
+      <div class="win7-task-item" onclick="switchSection('analytics')">
+        <span class="text-sm">📈</span>
+        <span class="text-xs">Kaynak İzleyici</span>
+      </div>
+    </div>
+
+    <!-- Notification Area (System Tray) -->
+    <div class="flex items-center space-x-2.5 text-white pr-1">
+      
+      <!-- Wi-Fi Beacon Icon -->
+      <span title="Eduroam Campus Wi-Fi: Bağlı (%100)" class="text-xs cursor-pointer hover:text-sky-200">
+        📶
+      </span>
+
+      <!-- Audio Speaker Icon -->
+      <span title="Hoparlör: %100" class="text-xs cursor-pointer hover:text-sky-200" onclick="playSound('beep')">
+        🔊
+      </span>
+
+      <!-- Action Center Flag -->
+      <span title="İşlem Merkezi: 0 önemli mesaj" class="text-xs cursor-pointer hover:text-sky-200" onclick="showToast('İşlem Merkezi: Tüm kampüs servisleri normal çalışıyor.', 'success')">
+        🚩
+      </span>
+
+      <!-- Windows 7 Date & Clock -->
+      <div class="text-center font-mono leading-tight text-[11px] text-white/90 px-1 border-l border-white/20 pl-2">
+        <div id="tray-clock">14:36</div>
+        <div class="text-[9px] text-white/80" id="tray-date">16.11.2026</div>
+      </div>
+
+      <!-- Aero Peek Button -->
+      <div class="win7-show-desktop" title="Masaüstünü Göster" onclick="showToast('Aero Peek Masaüstü Önizleme', 'info')"></div>
+
+    </div>
+
+  </footer>
+
+  <!-- ================= WINDOWS 7 AERO DIALOG MODALS ================= -->
+
+  <!-- 1. SMART QR SCANNER DIALOG -->
+  <div id="modal-qr" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="win7-modal-dialog max-w-md w-full">
+      <!-- Aero Dialog Header -->
+      <div class="flex items-center justify-between pb-1.5 px-2">
+        <div class="flex items-center space-x-1.5">
+          <span class="text-xs">📷</span>
+          <span class="aero-title-glow text-xs font-bold">UniPass Smart QR Okuyucu</span>
+        </div>
+        <button class="win7-ctrl-btn win7-ctrl-close" onclick="closeQRModal()">
+          <svg class="w-3 h-3 text-slate-800" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 12 12">
+            <line x1="2" y1="2" x2="10" y2="10" /><line x1="10" y1="2" x2="2" y2="10" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Dialog Body -->
+      <div class="win7-modal-content p-4 space-y-3">
+        <p class="text-xs text-slate-600">
+          Masa barkodunu veya amfi projeksiyon ekranındaki kodu vizör içerisinde tutunuz.
+        </p>
+
+        <!-- Scanner Viewport -->
+        <div class="relative w-full aspect-square bg-[#0b1726] rounded border-2 border-[#547394] overflow-hidden flex items-center justify-center shadow-inner">
+          <div class="absolute inset-4 border border-dashed border-sky-400/40 rounded pointer-events-none"></div>
+          
+          <!-- Animated Laser Beam -->
+          <div class="absolute left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent scan-laser-line shadow-[0_0_8px_#38bdf8]"></div>
+
+          <!-- Target QR Code -->
+          <div class="bg-white p-3 rounded shadow-md text-center">
+            <svg class="w-32 h-32 text-slate-900" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm14-2h2v2h-2v-2zm-4 0h2v2h-2v-2zm2 2h2v2h-2v-2zm2 2h2v4h-4v-2h2v-2zm-4 2h2v2h-2v-2zm4-6h2v2h-2v-2zM5 5h2v2H5V5zm12 0h2v2h-2V5zM5 17h2v2H5v-2z"/>
+            </svg>
+            <span class="text-[10px] font-mono font-bold text-slate-800" id="qr-target-label">DESK-A14-LIB</span>
+          </div>
+
+          <div class="absolute bottom-2 bg-slate-900/90 text-sky-300 text-[10px] px-2 py-0.5 rounded font-mono border border-slate-700">
+            Wi-Fi Konum: Doğrulandı (Kampüs İçi)
+          </div>
+        </div>
+
+        <!-- Quick Simulation Scenario Buttons -->
+        <div class="pt-1 space-y-1.5">
+          <div class="text-[11px] text-slate-500 font-semibold">Hızlı Test Senaryoları:</div>
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="completeQRScan('desk', 'A-14')" class="win7-btn win7-btn-default font-semibold !py-1.5">
+              🪑 Masa A-14'e Otur
+            </button>
+            <button onclick="completeQRScan('desk', 'B-08')" class="win7-btn font-semibold !py-1.5">
+              🪑 Masa B-08'e Otur
+            </button>
+          </div>
+          <button onclick="completeQRScan('classroom', 'CENG301')" class="w-full win7-btn font-bold !py-1.5 text-blue-900">
+            🎓 CENG 301 Ders Yoklamasına Katıl (Amfi-1)
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Dialog Footer -->
+      <div class="flex justify-end pt-2 px-1">
+        <button onclick="closeQRModal()" class="win7-btn">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. DESK DETAIL & ACTION DIALOG -->
+  <div id="modal-desk" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="win7-modal-dialog max-w-md w-full">
+      <div class="flex items-center justify-between pb-1.5 px-2">
+        <div class="flex items-center space-x-1.5">
+          <span class="text-xs">🪑</span>
+          <span class="aero-title-glow text-xs font-bold" id="modal-desk-title">Masa Detayı</span>
+        </div>
+        <button class="win7-ctrl-btn win7-ctrl-close" onclick="closeDeskModal()">
+          <svg class="w-3 h-3 text-slate-800" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 12 12">
+            <line x1="2" y1="2" x2="10" y2="10" /><line x1="10" y1="2" x2="2" y2="10" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="win7-modal-content p-4 space-y-3">
+        <div class="flex items-center space-x-3">
+          <div id="modal-desk-badge" class="w-12 h-12 rounded flex items-center justify-center text-lg font-black font-mono shadow border">
+            A-14
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-800" id="modal-desk-title-sub">Masa A-14</h3>
+            <p class="text-xs text-slate-500" id="modal-desk-zone">Salon A &bull; Sessiz Alan</p>
+          </div>
+        </div>
+
+        <!-- Specs List -->
+        <div class="bg-white rounded border border-[#ccd7e2] p-2.5 text-xs space-y-1.5">
+          <div class="flex justify-between">
+            <span class="text-slate-500">Durum:</span>
+            <span id="modal-desk-status" class="font-semibold text-emerald-700">Boş (Müsait)</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">Donanım:</span>
+            <span class="text-slate-700" id="modal-desk-features">220V Priz &bull; LED Aydınlatma</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">Kullanıcı:</span>
+            <span class="text-slate-700 font-mono" id="modal-desk-user">—</span>
+          </div>
+          <div class="flex justify-between" id="modal-desk-timer-row">
+            <span class="text-slate-500">Kalan Sayaç:</span>
+            <span class="text-amber-800 font-mono font-bold" id="modal-desk-timer">—</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Actions -->
+        <div id="modal-desk-actions" class="space-y-1.5 pt-1">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2 px-1">
+        <button onclick="closeDeskModal()" class="win7-btn">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. PROJECTION FULLSCREEN QR DIALOG (FOR FACULTY) -->
+  <div id="modal-projection" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-6">
+    <div class="win7-modal-dialog max-w-xl w-full">
+      <div class="flex items-center justify-between pb-1.5 px-2">
+        <div class="flex items-center space-x-1.5">
+          <span class="text-xs">📽️</span>
+          <span class="aero-title-glow text-xs font-bold">Projeksiyon Tahta Ekranı - CENG 301</span>
+        </div>
+        <button class="win7-ctrl-btn win7-ctrl-close" onclick="closeProjectionModal()">
+          <svg class="w-3 h-3 text-slate-800" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 12 12">
+            <line x1="2" y1="2" x2="10" y2="10" /><line x1="10" y1="2" x2="2" y2="10" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="win7-modal-content p-6 text-center space-y-4">
+        <div>
+          <span class="win7-badge win7-badge-blue">Dinamik Güvenlik Doğrulaması</span>
+          <h2 class="text-xl font-bold text-slate-900 mt-1">CENG 301 - Dinamik Hibrit Yoklama</h2>
+          <p class="text-xs text-slate-500">Öğrenciler UniPass uygulaması üzerinden aşağıdaki dinamik kodu taramalıdır.</p>
+        </div>
+
+        <!-- High-contrast Large QR -->
+        <div class="bg-white p-5 rounded-lg inline-block border-2 border-slate-300 shadow-md">
+          <svg class="w-56 h-56 text-slate-900" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm14-2h2v2h-2v-2zm-4 0h2v2h-2v-2zm2 2h2v2h-2v-2zm2 2h2v4h-4v-2h2v-2zm-4 2h2v2h-2v-2zm4-6h2v2h-2v-2zM5 5h2v2H5V5zm12 0h2v2h-2V5zM5 17h2v2H5v-2z"/>
+          </svg>
+          <div class="mt-2 text-xs font-mono font-bold text-blue-900" id="dynamic-otp-text">OTP-TOKEN: #892-F91 (28 sn)</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-left text-xs bg-white p-2.5 rounded border border-[#ccd7e2]">
+          <div class="flex items-start space-x-1.5">
+            <span class="text-emerald-600 font-bold">✓</span>
+            <span class="text-slate-600"><b>Dinamik OTP:</b> Kod her 30 sn'de bir yenilenerek uzaktan hileli yoklamayı önler.</span>
+          </div>
+          <div class="flex items-start space-x-1.5">
+            <span class="text-emerald-600 font-bold">✓</span>
+            <span class="text-slate-600"><b>Wi-Fi Geofence:</b> Sadece Amfi-1 Eduroam ağına bağlı cihazlar kabul edilir.</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs text-slate-600 pt-1">
+          <span>Derse Katılan: <b class="text-emerald-700 font-mono text-sm" id="proj-attended-count">58 / 65</b></span>
+          <button onclick="closeProjectionModal()" class="win7-btn win7-btn-default font-semibold !py-1.5 !px-4">
+            Yoklama Çizelgesine Dön
+          </button>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-2 px-1">
+        <button onclick="closeProjectionModal()" class="win7-btn">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. NEW ISSUE TICKET DIALOG -->
+  <div id="modal-issue" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="win7-modal-dialog max-w-md w-full">
+      <div class="flex items-center justify-between pb-1.5 px-2">
+        <div class="flex items-center space-x-1.5">
+          <span class="text-xs">🛠️</span>
+          <span class="aero-title-glow text-xs font-bold">Yeni Kampüs / Kütüphane Arıza Bildirimi</span>
+        </div>
+        <button class="win7-ctrl-btn win7-ctrl-close" onclick="closeIssueModal()">
+          <svg class="w-3 h-3 text-slate-800" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 12 12">
+            <line x1="2" y1="2" x2="10" y2="10" /><line x1="10" y1="2" x2="2" y2="10" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="win7-modal-content p-4 space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-600 mb-1 font-semibold">Konum / Masa No</label>
+          <input type="text" id="new-issue-location" value="Salon B &bull; Masa B-14" class="w-full bg-white border border-[#7da2ce] rounded p-1.5 text-slate-800">
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1 font-semibold">Arıza / Talep Türü</label>
+          <select id="new-issue-type" class="w-full bg-white border border-[#7da2ce] rounded p-1.5 text-slate-800">
+            <option>Priz / Elektrik Kesintisi</option>
+            <option>Aşırı Gürültü İhbarı</option>
+            <option>Klima / Havalandırma Talebi</option>
+            <option>Temizlik / Hijyen İhtiyacı</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1 font-semibold">Açıklama</label>
+          <textarea id="new-issue-desc" rows="2" class="w-full bg-white border border-[#7da2ce] rounded p-1.5 text-slate-800" placeholder="Detay yazınız..."></textarea>
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-1.5 pt-2 px-1">
+        <button onclick="closeIssueModal()" class="win7-btn">İptal</button>
+        <button onclick="submitNewIssue()" class="win7-btn win7-btn-default font-bold">Kaydet &amp; İlet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= WINDOWS 7 BALLOON NOTIFICATION CONTAINER ================= -->
+  <div id="toast-container" class="fixed bottom-12 right-4 z-50 flex flex-col space-y-2 pointer-events-none max-w-sm w-full">
+    <!-- Toasts injected dynamically as Windows 7 taskbar balloons -->
+  </div>
+
+  <!-- ================= COMPREHENSIVE JAVASCRIPT LOGIC ================= -->
+  <script>
+    /* ----------------------------------------------------
+       AUDIO SYNTHESIZER (Web Audio API)
+       ---------------------------------------------------- */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+
+        if (type === 'beep') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.exponentialRampToValueAtTime(1760, now + 0.12);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+          osc.start(now);
+          osc.stop(now + 0.12);
+        } else if (type === 'warning') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.setValueAtTime(330, now + 0.15);
+          osc.frequency.setValueAtTime(220, now + 0.3);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+          osc.start(now);
+          osc.stop(now + 0.45);
+        } else if (type === 'success') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.setValueAtTime(659.25, now + 0.08);
+          osc.frequency.setValueAtTime(783.99, now + 0.16);
+          osc.frequency.setValueAtTime(1046.50, now + 0.24);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+          osc.start(now);
+          osc.stop(now + 0.4);
+        }
+      } catch (e) {
+        // Audio might be ignored if not initiated by interaction
+      }
+    }
+
+    /* ----------------------------------------------------
+       GLOBAL STATE & MOCK DATA (1.423 SEATS SYSTEM & CLASSROOMS)
+       ---------------------------------------------------- */
+    let currentRole = 'student'; // 'student' | 'faculty' | 'admin'
+    let currentSection = 'library'; // 'library' | 'classrooms' | 'analytics'
+    let currentZone = 'all'; // 'all' | 'A' | 'B' | 'C' | 'D'
+    let statusFilter = 'all';
+    let filterPowerOnly = false;
+    let heatmapActive = false;
+    let selectedDeskId = null;
+
+    let studentSession = {
+      isSeated: true,
+      deskId: 'A-14',
+      zone: 'Salon A',
+      startTime: Date.now() - 6138000,
+      inBreak: false,
+      breakSecondsRemaining: 900
+    };
+
+    const desks = [
+      { id: 'A-01', zone: 'A', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'A-02', zone: 'A', status: 'occupied', hasPower: true, user: '20231011 - Mert K.', breakTime: 0 },
+      { id: 'A-03', zone: 'A', status: 'occupied', hasPower: false, user: '20220844 - Esra T.', breakTime: 0 },
+      { id: 'A-04', zone: 'A', status: 'ghost_warning', hasPower: true, user: '20210920 - Can D.', breakTime: 240 },
+      { id: 'A-05', zone: 'A', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'A-06', zone: 'A', status: 'occupied', hasPower: false, user: '20234412 - Ayşe B.', breakTime: 0 },
+      { id: 'A-07', zone: 'A', status: 'occupied', hasPower: true, user: '20223100 - Burak S.', breakTime: 0 },
+      { id: 'A-08', zone: 'A', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'A-09', zone: 'A', status: 'occupied', hasPower: false, user: '20212001 - Selin Ö.', breakTime: 0 },
+      { id: 'A-10', zone: 'A', status: 'occupied', hasPower: true, user: '20221440 - Deniz Y.', breakTime: 0 },
+      { id: 'A-11', zone: 'A', status: 'ghost_warning', hasPower: true, user: '20230018 - Onur V.', breakTime: 110 },
+      { id: 'A-12', zone: 'A', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'A-13', zone: 'A', status: 'occupied', hasPower: false, user: '20229981 - Gamze A.', breakTime: 0 },
+      { id: 'A-14', zone: 'A', status: 'occupied', hasPower: true, user: '20231048 - Ali Yılmaz (Siz)', breakTime: 0, isMine: true },
+      { id: 'A-15', zone: 'A', status: 'occupied', hasPower: true, user: '20214812 - Tolga M.', breakTime: 0 },
+      { id: 'A-16', zone: 'A', status: 'available', hasPower: false, user: null, breakTime: 0 },
+      { id: 'A-17', zone: 'A', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'A-18', zone: 'A', status: 'occupied', hasPower: true, user: '20230554 - Ceren K.', breakTime: 0 },
+
+      { id: 'B-01', zone: 'B', status: 'occupied', hasPower: true, user: '20221088 - Berk G.', breakTime: 0 },
+      { id: 'B-02', zone: 'B', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'B-03', zone: 'B', status: 'ghost_warning', hasPower: true, user: '20230199 - Zeynep U.', breakTime: 420 },
+      { id: 'B-04', zone: 'B', status: 'occupied', hasPower: true, user: '20228811 - Kerem P.', breakTime: 0 },
+      { id: 'B-05', zone: 'B', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'B-06', zone: 'B', status: 'occupied', hasPower: true, user: '20217744 - Melis T.', breakTime: 0 },
+      { id: 'B-07', zone: 'B', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'B-08', zone: 'B', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'B-09', zone: 'B', status: 'occupied', hasPower: true, user: '20231990 - Arda N.', breakTime: 0 },
+
+      { id: 'C-01', zone: 'C', status: 'occupied', hasPower: true, user: '20218800 - Grup Proje Ekibi #4', breakTime: 0 },
+      { id: 'C-02', zone: 'C', status: 'occupied', hasPower: true, user: '20224412 - IEEE Öğrenci Kolu', breakTime: 0 },
+      { id: 'C-03', zone: 'C', status: 'available', hasPower: false, user: null, breakTime: 0 },
+      { id: 'C-04', zone: 'C', status: 'ghost_warning', hasPower: true, user: '20231144 - Bitirme Tezi Grubu', breakTime: 95 },
+
+      { id: 'D-01', zone: 'D', status: 'occupied', hasPower: true, user: '20200114 - Arş. Gör. Kemal B.', breakTime: 0 },
+      { id: 'D-02', zone: 'D', status: 'available', hasPower: true, user: null, breakTime: 0 },
+      { id: 'D-03', zone: 'D', status: 'occupied', hasPower: true, user: '20220901 - Elif H.', breakTime: 0 },
+      { id: 'D-04', zone: 'D', status: 'occupied', hasPower: true, user: '20210088 - Serdar R.', breakTime: 0 },
+      { id: 'D-05', zone: 'D', status: 'available', hasPower: true, user: null, breakTime: 0 }
+    ];
+
+    const classrooms = [
+      { id: 'Amfi-1', name: 'Büyük Mühendislik Amfisi', capacity: 180, current: 148, activeCourse: 'CENG 301 - Veri Tabanı', lecturer: 'Doç. Dr. Selin Doğan', status: 'Yoklama Sürüyor' },
+      { id: 'Amfi-2', name: 'Hukuk Amfisi 2', capacity: 120, current: 48, activeCourse: 'LAW 204 - Ceza Hukuku', lecturer: 'Prof. Dr. Tarık Er', status: 'Ders Devam Ediyor' },
+      { id: 'D-102', name: 'Derslik Binası Kat 1', capacity: 90, current: 76, activeCourse: 'MATH 101 - Kalkülüs I', lecturer: 'Doç. Dr. Nesrin Y.', status: 'Yoklama Kapandı' },
+      { id: 'Lab-3', name: 'Yazılım Laboratuvarı 3', capacity: 45, current: 41, activeCourse: 'CENG 212 - Algoritmalar', lecturer: 'Dr. Öğr. Üyesi Cemal A.', status: 'Aktif' }
+    ];
+
+    let attendanceList = [
+      { id: '20231048', name: 'Ali Yılmaz', dept: 'Bilgisayar Müh.', time: '14:03', method: 'Dinamik QR + Wi-Fi', status: 'attended' },
+      { id: '20231011', name: 'Mert Kaya', dept: 'Bilgisayar Müh.', time: '14:01', method: 'Dinamik QR + Wi-Fi', status: 'attended' },
+      { id: '20231024', name: 'Zeynep Çelik', dept: 'Yazılım Müh.', time: '14:04', method: 'Dinamik QR + Wi-Fi', status: 'attended' },
+      { id: '20231089', name: 'Deniz Akın', dept: 'Bilgisayar Müh.', time: '14:06', method: 'Dinamik QR + Wi-Fi', status: 'attended' },
+      { id: '20231102', name: 'Burak Demir', dept: 'Endüstri Müh.', time: '14:08', method: 'Dinamik QR + Wi-Fi', status: 'attended' },
+      { id: '20220912', name: 'Ceren Güneş', dept: 'Bilgisayar Müh.', time: '—', method: '—', status: 'absent' },
+      { id: '20220845', name: 'Emre Şahin', dept: 'Yazılım Müh.', time: '—', method: 'Raporlu', status: 'excused' },
+      { id: '20231150', name: 'Hilal Karaca', dept: 'Bilgisayar Müh.', time: '14:10', method: 'Dinamik QR + Wi-Fi', status: 'attended' },
+      { id: '20231201', name: 'Umut Polat', dept: 'Bilgisayar Müh.', time: '—', method: '—', status: 'absent' },
+      { id: '20231222', name: 'Selin Yurt', dept: 'Bilgisayar Müh.', time: '14:02', method: 'Dinamik QR + Wi-Fi', status: 'attended' }
+    ];
+
+    const ghostLogs = [
+      { id: 1, time: '14:18', desk: 'A-09', user: '20220199', note: '15 dk mola süresi doldu. Masa otomatik serbest bırakıldı.' },
+      { id: 2, time: '13:54', desk: 'B-14', user: '20210842', note: 'IoT varlık sensörü hareketsizlik zaman aşımı. Masa boşa çıkarıldı.' },
+      { id: 3, time: '13:22', desk: 'A-22', user: '20230419', note: 'Öğrenci 15 dk mola hakkını aştı. Bildirim gönderildi ve masa açıldı.' },
+      { id: 4, time: '12:45', desk: 'C-06', user: '20229011', note: 'Hayalet işgal engellendi. Bekleyen öğrenciye SMS/push gönderildi.' }
+    ];
+
+    const issuesList = [
+      { id: 101, loc: 'Salon B &bull; Masa B-14', type: 'Priz / Elektrik', desc: 'Type-C priz portunda temassızlık var.', status: 'open', priority: 'normal' },
+      { id: 102, loc: 'Salon A (Kuzey)', type: 'Klima', desc: 'Sessiz alan aşırı soğuk üflüyor, sıcaklık 19°C.', status: 'in_progress', priority: 'high' },
+      { id: 103, loc: 'Amfi-1 Giriş', type: 'QR Etiket', desc: 'Sağ kapıdaki QR etiket yıpranmış, yenilenmeli.', status: 'resolved', priority: 'low' }
+    ];
+
+    /* ----------------------------------------------------
+       INITIALIZATION
+       ---------------------------------------------------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDesks();
+      renderClassrooms();
+      renderAttendanceTable();
+      renderGhostLogs();
+      renderIssuesList();
+      startSessionTimer();
+      startOtpTicker();
+      initLiveClock();
+    });
+
+    function initLiveClock() {
+      function update() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        const dateStr = now.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const c = document.getElementById('tray-clock');
+        const d = document.getElementById('tray-date');
+        if (c) c.innerText = timeStr;
+        if (d) d.innerText = dateStr;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    /* ----------------------------------------------------
+       ROLE SWITCHER (WINDOWS 7 STYLE)
+       ---------------------------------------------------- */
+    function switchRole(role) {
+      currentRole = role;
+      
+      document.querySelectorAll('.role-btn').forEach(btn => {
+        btn.classList.remove('win7-btn-default');
+      });
+      const activeBtn = document.getElementById(`btn-role-${role}`);
+      if (activeBtn) {
+        activeBtn.classList.add('win7-btn-default');
+      }
+
+      const roleBadge = document.getElementById('current-user-title');
+      if (role === 'student') {
+        roleBadge.innerText = 'Ali Yılmaz (Öğrenci #20231048)';
+        switchSection('library');
+        showToast('Öğrenci konsolu devrede. Kütüphane planından boş masa seçebilirsiniz.', 'info');
+      } else if (role === 'faculty') {
+        roleBadge.innerText = 'Doç. Dr. Selin Doğan (Akademisyen / CENG301)';
+        switchSection('classrooms');
+        showToast('Akademisyen konsoluna geçildi. Yoklama çizelgesi ve projeksiyon aktif.', 'info');
+      } else if (role === 'admin') {
+        roleBadge.innerText = 'Kaan Erdem (Kütüphane & Kampüs Operasyonları Md.)';
+        switchSection('analytics');
+        showToast('İdari konsol devrede. Kaynak izleyicisi ve arıza masası açıldı.', 'info');
+      }
+    }
+
+    /* ----------------------------------------------------
+       SECTION TAB SWITCHER (WINDOWS 7 PROPERTY SHEETS)
+       ---------------------------------------------------- */
+    function switchSection(section) {
+      currentSection = section;
+
+      document.querySelectorAll('.win7-tab').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      const activeTabBtn = document.getElementById(`tab-btn-${section}`);
+      if (activeTabBtn) {
+        activeTabBtn.classList.add('active');
+      }
+
+      document.getElementById('section-library').classList.toggle('hidden', section !== 'library');
+      document.getElementById('section-classrooms').classList.toggle('hidden', section !== 'classrooms');
+      document.getElementById('section-analytics').classList.toggle('hidden', section !== 'analytics');
+
+      // Update path in address bar
+      const paths = {
+        library: 'UniPass Yerleşke Merkezi (1.423 Koltuk) ▶ Kütüphane & Masa Haritası',
+        classrooms: 'UniPass Yerleşke Merkezi (1.423 Koltuk) ▶ Derslikler & Hibrit Yoklama',
+        analytics: 'UniPass Yerleşke Merkezi (1.423 Koltuk) ▶ Kaynak İzleyicisi & Loglar'
+      };
+      document.getElementById('address-bar-path').innerText = paths[section] || 'UniPass Yerleşke';
+    }
+
+    /* ----------------------------------------------------
+       DESK GRID RENDERING & FILTERING
+       ---------------------------------------------------- */
+    function renderDesks() {
+      const grid = document.getElementById('desks-grid');
+      grid.innerHTML = '';
+
+      const query = (document.getElementById('desk-search').value || '').toLowerCase();
+
+      const filtered = desks.filter(d => {
+        if (currentZone !== 'all' && d.zone !== currentZone) return false;
+        if (statusFilter !== 'all' && d.status !== statusFilter) return false;
+        if (filterPowerOnly && !d.hasPower) return false;
+        if (query && !d.id.toLowerCase().includes(query)) return false;
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-10 text-center text-slate-500 text-xs">
+            Belirtilen kriterlere uygun çalışma masası bulunamadı.
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(desk => {
+        const isMine = studentSession.isSeated && studentSession.deskId === desk.id;
+        
+        let tileTheme = 'desk-available';
+        let statusBadge = '<span class="win7-badge win7-badge-green">Boş</span>';
+
+        if (desk.status === 'occupied') {
+          tileTheme = 'desk-occupied';
+          statusBadge = '<span class="win7-badge win7-badge-red">Dolu</span>';
+        } else if (desk.status === 'ghost_warning') {
+          tileTheme = 'desk-ghost';
+          statusBadge = `<span class="win7-badge win7-badge-amber">Mola (${formatSeconds(desk.breakTime)})</span>`;
+        }
+
+        if (isMine) {
+          tileTheme = 'desk-mine';
+          statusBadge = '<span class="win7-badge win7-badge-blue">Sizin</span>';
+        }
+
+        const el = document.createElement('div');
+        el.className = `desk-tile p-2.5 flex flex-col justify-between ${tileTheme}`;
+        el.onclick = () => openDeskModal(desk.id);
+
+        el.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-bold text-xs tracking-tight">${desk.id}</span>
+            <div class="flex items-center space-x-1">
+              ${desk.hasPower ? '<span title="220V Priz Mevcut" class="text-amber-600 text-xs font-bold">⚡</span>' : ''}
+              <span class="w-2 h-2 rounded-full ${desk.status === 'available' ? 'bg-emerald-600' : desk.status === 'occupied' ? 'bg-rose-600' : 'bg-amber-600'}"></span>
+            </div>
+          </div>
+
+          <div class="mt-2 flex items-center justify-between">
+            ${statusBadge}
+          </div>
+        `;
+
+        grid.appendChild(el);
+      });
+
+      updateStatsSummary();
+    }
+
+    function selectZone(zone) {
+      currentZone = zone;
+      document.querySelectorAll('.zone-pill').forEach(btn => {
+        btn.classList.remove('win7-btn-default', 'font-semibold');
+      });
+      const activeBtn = document.getElementById(`zone-btn-${zone}`);
+      if (activeBtn) {
+        activeBtn.classList.add('win7-btn-default', 'font-semibold');
+      }
+
+      const headings = {
+        all: 'Tüm Kütüphane Oturma Alanı (1.423 Koltuk Kapasitesi)',
+        A: 'Salon A - Sessiz Çalışma Bölümü (450 Koltuk)',
+        B: 'Salon B - Bireysel & Prizli Masalar (420 Koltuk)',
+        C: 'Salon C - Grup Çalışma Odaları (310 Koltuk)',
+        D: 'Salon D - Lisansüstü & Bilgisayar Laboratuvarı (243 Koltuk)'
+      };
+      document.getElementById('current-zone-heading').innerText = headings[zone] || headings.all;
+
+      renderDesks();
+    }
+
+    function handleFilterChange() {
+      statusFilter = document.getElementById('status-filter').value;
+      renderDesks();
+    }
+
+    function handleDeskSearch() {
+      renderDesks();
+    }
+
+    function filterByStatus(status) {
+      document.getElementById('status-filter').value = status;
+      statusFilter = status;
+      renderDesks();
+    }
+
+    function togglePowerFilter() {
+      filterPowerOnly = !filterPowerOnly;
+      const btn = document.getElementById('toggle-power-filter');
+      btn.classList.toggle('win7-btn-default', filterPowerOnly);
+      renderDesks();
+    }
+
+    function toggleHeatmapView() {
+      heatmapActive = !heatmapActive;
+      document.getElementById('heatmap-overlay').classList.toggle('hidden', !heatmapActive);
+      const btn = document.getElementById('toggle-heatmap');
+      btn.classList.toggle('win7-btn-default', heatmapActive);
+      document.getElementById('heatmap-btn-label').innerText = heatmapActive ? '🔥 Isı Haritası (Açık)' : '🔥 Isı Haritası';
+      if (heatmapActive) {
+        showToast('Kütüphane anlık yoğunluk ısı haritası aktif edildi.', 'info');
+      }
+    }
+
+    function updateStatsSummary() {
+      const avail = desks.filter(d => d.status === 'available').length;
+      const occ = desks.filter(d => d.status === 'occupied').length;
+      const ghost = desks.filter(d => d.status === 'ghost_warning').length;
+
+      document.getElementById('stat-available-count').innerHTML = `${avail * 28 + 14} <span class="text-xs font-normal text-slate-500">Masa</span>`;
+      document.getElementById('stat-occupied-count').innerHTML = `${occ * 31 + 45} <span class="text-xs font-normal text-slate-500">Kişi</span>`;
+      document.getElementById('stat-ghost-count').innerHTML = `${ghost * 12 + 6} <span class="text-xs font-normal text-slate-500">Masa</span>`;
+      document.getElementById('ghost-count-badge').innerText = `${ghost * 12 + 6}`;
+    }
+
+    /* ----------------------------------------------------
+       DESK MODAL & ACTIONS
+       ---------------------------------------------------- */
+    function openDeskModal(deskId) {
+      selectedDeskId = deskId;
+      const desk = desks.find(d => d.id === deskId);
+      if (!desk) return;
+
+      document.getElementById('modal-desk-title').innerText = `Masa ${desk.id} Özellikleri`;
+      document.getElementById('modal-desk-title-sub').innerText = `Masa ${desk.id}`;
+      document.getElementById('modal-desk-badge').innerText = desk.id;
+      
+      const zoneNames = { A: 'Salon A &bull; Sessiz Alan', B: 'Salon B &bull; Bireysel Masalar', C: 'Salon C &bull; Grup Odası', D: 'Salon D &bull; Araştırma Lab' };
+      document.getElementById('modal-desk-zone').innerHTML = zoneNames[desk.zone] || 'Kütüphane';
+
+      const isMine = studentSession.isSeated && studentSession.deskId === desk.id;
+      const badge = document.getElementById('modal-desk-badge');
+      const statusLabel = document.getElementById('modal-desk-status');
+      const userLabel = document.getElementById('modal-desk-user');
+      const timerRow = document.getElementById('modal-desk-timer-row');
+      const timerVal = document.getElementById('modal-desk-timer');
+
+      badge.className = 'w-12 h-12 rounded flex items-center justify-center text-lg font-black font-mono shadow border';
+
+      if (isMine) {
+        badge.classList.add('bg-blue-100', 'border-blue-400', 'text-blue-900');
+        statusLabel.className = 'font-semibold text-blue-700';
+        statusLabel.innerText = 'Sizin Masanız (Aktif Oturum)';
+        userLabel.innerText = 'Ali Yılmaz (#20231048)';
+      } else if (desk.status === 'available') {
+        badge.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-900');
+        statusLabel.className = 'font-semibold text-emerald-700';
+        statusLabel.innerText = '🟢 Boş (Müsait - QR ile Oturulabilir)';
+        userLabel.innerText = '—';
+      } else if (desk.status === 'occupied') {
+        badge.classList.add('bg-rose-100', 'border-rose-400', 'text-rose-900');
+        statusLabel.className = 'font-semibold text-rose-700';
+        statusLabel.innerText = '🔴 Dolu / Aktif Kullanımda';
+        userLabel.innerText = desk.user || 'Öğrenci';
+      } else if (desk.status === 'ghost_warning') {
+        badge.classList.add('bg-amber-100', 'border-amber-400', 'text-amber-900');
+        statusLabel.className = 'font-semibold text-amber-800';
+        statusLabel.innerText = '🟡 Hayalet İşgal / 15 Dk Mola İncelemesinde';
+        userLabel.innerText = desk.user || 'Kullanıcı Ayrıldı';
+      }
+
+      document.getElementById('modal-desk-features').innerText = desk.hasPower ? '220V Priz &bull; Type-C PD Hızlı Şarj' : 'Doğal Işık &bull; Standart Çalışma Masası';
+
+      if (desk.status === 'ghost_warning') {
+        timerRow.classList.remove('hidden');
+        timerVal.innerText = `${formatSeconds(desk.breakTime)} (Süre bitince otomatik boşa çıkacak)`;
+      } else if (isMine) {
+        timerRow.classList.remove('hidden');
+        timerVal.innerText = document.getElementById('session-elapsed').innerText;
+      } else {
+        timerRow.classList.add('hidden');
+      }
+
+      const actions = document.getElementById('modal-desk-actions');
+      actions.innerHTML = '';
+
+      if (isMine) {
+        actions.innerHTML = `
+          <button onclick="toggleStudentBreak(); closeDeskModal();" class="w-full win7-btn !py-1.5 font-semibold">
+            ${studentSession.inBreak ? 'Molayı Bitir ve Masaya Dön' : '15 Dakikalık Mola Başlat'}
+          </button>
+          <button onclick="simulateGhostTimeout(); closeDeskModal();" class="w-full win7-btn win7-btn-danger !py-1.5 font-semibold">
+            ⚠️ Zaman Aşımını Tetikle (+15 Dk Simülasyonu)
+          </button>
+          <button onclick="checkoutStudentSession(); closeDeskModal();" class="w-full win7-btn !py-1.5">
+            Masadan Çıkış Yap (Check-Out)
+          </button>
+        `;
+      } else if (desk.status === 'available') {
+        actions.innerHTML = `
+          <button onclick="openQRModal('desk', '${desk.id}'); closeDeskModal();" class="w-full win7-btn win7-btn-default font-bold !py-2 flex items-center justify-center space-x-1.5">
+            <span>📷 QR Okutarak Bu Masaya Otur</span>
+          </button>
+        `;
+      } else if (desk.status === 'ghost_warning') {
+        actions.innerHTML = `
+          <button onclick="forceReleaseDesk('${desk.id}'); closeDeskModal();" class="w-full win7-btn win7-btn-danger font-bold !py-1.5">
+            ⚠️ Süre Aşımı: Masayı Zorla Boşa Çıkar (Görevli Müdahalesi)
+          </button>
+          <button onclick="reportIssueForDesk('${desk.id}'); closeDeskModal();" class="w-full win7-btn !py-1.5">
+            Arıza / Eşya Bırakma İhbarı Bildir
+          </button>
+        `;
+      } else {
+        actions.innerHTML = `
+          <div class="p-2 rounded bg-slate-50 border border-slate-200 text-[11px] text-slate-500 text-center">
+            Bu masa şu an başka bir öğrenci tarafından aktif kullanılmaktadır.
+          </div>
+          <button onclick="reportIssueForDesk('${desk.id}'); closeDeskModal();" class="w-full win7-btn !py-1.5">
+            Masa Hakkında Bildirim Yap
+          </button>
+        `;
+      }
+
+      document.getElementById('modal-desk').classList.remove('hidden');
+    }
+
+    function closeDeskModal() {
+      document.getElementById('modal-desk').classList.add('hidden');
+    }
+
+    /* ----------------------------------------------------
+       QR SCANNER MODAL LOGIC
+       ---------------------------------------------------- */
+    let currentQRScanContext = 'general';
+    let currentQRTargetId = null;
+
+    function openQRModal(context = 'general', targetId = null) {
+      currentQRScanContext = context;
+      currentQRTargetId = targetId;
+
+      const label = document.getElementById('qr-target-label');
+      if (context === 'attendance') {
+        label.innerText = 'CLASSROOM-AMFI1-CENG301';
+      } else if (targetId) {
+        label.innerText = `DESK-${targetId}-LIB`;
+      } else {
+        label.innerText = 'UNIPASS-SMART-BEACON';
+      }
+
+      document.getElementById('modal-qr').classList.remove('hidden');
+      playSound('beep');
+    }
+
+    function closeQRModal() {
+      document.getElementById('modal-qr').classList.add('hidden');
+    }
+
+    function completeQRScan(type, id) {
+      playSound('success');
+      closeQRModal();
+
+      if (type === 'desk') {
+        const targetDesk = desks.find(d => d.id === id);
+        if (targetDesk) {
+          if (studentSession.isSeated && studentSession.deskId !== id) {
+            const oldDesk = desks.find(d => d.id === studentSession.deskId);
+            if (oldDesk) {
+              oldDesk.status = 'available';
+              oldDesk.user = null;
+              oldDesk.breakTime = 0;
+            }
+          }
+
+          targetDesk.status = 'occupied';
+          targetDesk.user = '20231048 - Ali Yılmaz (Siz)';
+          targetDesk.breakTime = 0;
+
+          studentSession.isSeated = true;
+          studentSession.deskId = id;
+          studentSession.zone = targetDesk.zone;
+          studentSession.startTime = Date.now();
+          studentSession.inBreak = false;
+
+          updateActiveSessionBanner();
+          renderDesks();
+          showToast(`Başarılı! ${id} numaralı masaya check-in yapıldı.`, 'success');
+        }
+      } else if (type === 'classroom') {
+        const student = attendanceList.find(s => s.id === '20231048');
+        if (student) {
+          student.status = 'attended';
+          student.time = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+          student.method = 'Dinamik QR + Wi-Fi';
+          renderAttendanceTable();
+          showToast(`CENG 301 (Amfi-1) ders yoklamanız başarıyla kaydedildi!`, 'success');
+        }
+      }
+    }
+
+    /* ----------------------------------------------------
+       GHOST OCCUPATION SIMULATION & TIMEOUT LOGIC
+       ---------------------------------------------------- */
+    function toggleStudentBreak() {
+      if (!studentSession.isSeated) return;
+
+      studentSession.inBreak = !studentSession.inBreak;
+      const desk = desks.find(d => d.id === studentSession.deskId);
+
+      if (studentSession.inBreak) {
+        studentSession.breakSecondsRemaining = 900;
+        if (desk) {
+          desk.status = 'ghost_warning';
+          desk.breakTime = 900;
+        }
+        showToast('15 dakikalık mola süreniz başladı. Masa durumunuz "Mola İncelemesi" olarak güncellendi.', 'warning');
+      } else {
+        if (desk) {
+          desk.status = 'occupied';
+          desk.breakTime = 0;
+        }
+        showToast('Moladan döndünüz. Masa oturumunuz kaldığı yerden devam ediyor.', 'success');
+      }
+
+      updateActiveSessionBanner();
+      renderDesks();
+    }
+
+    function simulateGhostTimeout() {
+      if (!studentSession.isSeated) {
+        showToast('Aktif bir masa oturumunuz bulunmuyor.', 'info');
+        return;
+      }
+
+      playSound('warning');
+
+      const deskId = studentSession.deskId;
+      const desk = desks.find(d => d.id === deskId);
+
+      if (desk) {
+        desk.status = 'available';
+        desk.user = null;
+        desk.breakTime = 0;
+      }
+
+      ghostLogs.unshift({
+        id: Date.now(),
+        time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+        desk: deskId,
+        user: '20231048',
+        note: '15 dk mola süresi aşıldığı için UniPass otomasyonu tarafından otomatik serbest bırakıldı.'
+      });
+      renderGhostLogs();
+
+      studentSession.isSeated = false;
+      studentSession.inBreak = false;
+      studentSession.deskId = null;
+
+      updateActiveSessionBanner();
+      renderDesks();
+
+      showToast(`⚠️ DİKKAT: Masa ${deskId} mola zaman aşımı nedeniyle otomatik boşaltıldı ve yeni öğrencilere açıldı!`, 'error');
+    }
+
+    function forceReleaseDesk(deskId) {
+      playSound('warning');
+      const desk = desks.find(d => d.id === deskId);
+      if (desk) {
+        desk.status = 'available';
+        desk.user = null;
+        desk.breakTime = 0;
+
+        ghostLogs.unshift({
+          id: Date.now(),
+          time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+          desk: deskId,
+          user: 'Görevli Müdahalesi',
+          note: 'Görevli tarafından hayalet işgal sonlandırıldı ve masa sisteme geri kazandırıldı.'
+        });
+        renderGhostLogs();
+        renderDesks();
+        showToast(`${deskId} masası başarıyla boşaltıldı ve sisteme eklendi.`, 'success');
+      }
+    }
+
+    function checkoutStudentSession() {
+      if (!studentSession.isSeated) return;
+      const desk = desks.find(d => d.id === studentSession.deskId);
+      if (desk) {
+        desk.status = 'available';
+        desk.user = null;
+        desk.breakTime = 0;
+      }
+
+      studentSession.isSeated = false;
+      studentSession.inBreak = false;
+      studentSession.deskId = null;
+
+      updateActiveSessionBanner();
+      renderDesks();
+      showToast('Masadan başarıyla ayrıldınız (Check-Out tamamlandı). Teşekkürler!', 'info');
+    }
+
+    function updateActiveSessionBanner() {
+      const banner = document.getElementById('active-session-banner');
+      if (!studentSession.isSeated) {
+        banner.classList.add('hidden');
+        return;
+      }
+      banner.classList.remove('hidden');
+
+      document.getElementById('session-table-badge').innerText = `Masa ${studentSession.deskId} (${studentSession.zone})`;
+
+      const breakDisplay = document.getElementById('break-timer-display');
+      const breakBtnText = document.getElementById('break-btn-text');
+
+      if (studentSession.inBreak) {
+        breakDisplay.classList.remove('hidden');
+        breakDisplay.classList.add('flex');
+        breakBtnText.innerText = 'Molayı Bitir';
+      } else {
+        breakDisplay.classList.add('hidden');
+        breakDisplay.classList.remove('flex');
+        breakBtnText.innerText = '15 Dk Mola Al';
+      }
+    }
+
+    /* ----------------------------------------------------
+       CLASSROOMS & ATTENDANCE LOGIC
+       ---------------------------------------------------- */
+    function renderClassrooms() {
+      const list = document.getElementById('classrooms-list');
+      list.innerHTML = '';
+
+      classrooms.forEach(c => {
+        const pct = Math.round((c.current / c.capacity) * 100);
+
+        const card = document.createElement('div');
+        card.className = 'bg-white p-2.5 rounded border border-[#ccd7e2] space-y-1.5 shadow-sm';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-800 text-xs">${c.id} - ${c.name}</span>
+            <span class="win7-badge ${pct > 85 ? 'win7-badge-red' : 'win7-badge-blue'} font-mono">%${pct} Dolu</span>
+          </div>
+          <div class="text-[11px] text-slate-600">
+            Ders: <b class="text-slate-800">${c.activeCourse}</b>
+          </div>
+          <!-- Windows 7 Candy Striped Progress Bar -->
+          <div class="win7-progress-track">
+            <div class="win7-progress-fill" style="width: ${pct}%"></div>
+          </div>
+          <div class="flex items-center justify-between text-[10px] text-slate-500">
+            <span>Kapasite: <b>${c.current} / ${c.capacity}</b></span>
+            <span>${c.status}</span>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function renderAttendanceTable() {
+      const tbody = document.getElementById('attendance-tbody');
+      tbody.innerHTML = '';
+
+      let attended = 0, excused = 0, absent = 0;
+
+      attendanceList.forEach((s, idx) => {
+        if (s.status === 'attended') attended++;
+        else if (s.status === 'excused') excused++;
+        else absent++;
+
+        let statusBadge = '<span class="win7-badge win7-badge-green">Geldi</span>';
+        if (s.status === 'excused') {
+          statusBadge = '<span class="win7-badge win7-badge-amber">Mazeretli</span>';
+        } else if (s.status === 'absent') {
+          statusBadge = '<span class="win7-badge win7-badge-red">Yok</span>';
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="font-mono font-bold text-slate-800">${s.id}</td>
+          <td class="font-semibold text-slate-800">${s.name}</td>
+          <td class="hidden sm:table-cell text-slate-600">${s.dept}</td>
+          <td class="font-mono text-slate-700">${s.time}</td>
+          <td class="hidden md:table-cell text-slate-500 text-[11px]">${s.method}</td>
+          <td>${statusBadge}</td>
+          <td class="text-right">
+            <button onclick="toggleStudentAttendanceStatus(${idx})" title="Durumu Değiştir" class="win7-btn text-[10px] !py-0.5 !px-1.5">
+              ✏️ Değiştir
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('stat-attended-count').innerText = attended;
+      document.getElementById('stat-excused-count').innerText = excused;
+      document.getElementById('stat-absent-count').innerText = absent;
+      document.getElementById('proj-attended-count').innerText = `${attended} / ${attendanceList.length}`;
+    }
+
+    function toggleStudentAttendanceStatus(index) {
+      const s = attendanceList[index];
+      if (s.status === 'attended') s.status = 'excused';
+      else if (s.status === 'excused') s.status = 'absent';
+      else {
+        s.status = 'attended';
+        s.time = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        s.method = 'Manuel (Öğr. Üyesi)';
+      }
+      playSound('beep');
+      renderAttendanceTable();
+      showToast(`${s.name} katılım durumu güncellendi: ${s.status.toUpperCase()}`, 'info');
+    }
+
+    function addNewStudentPrompt() {
+      const name = prompt('Eklenecek Öğrenci Adı Soyadı:');
+      if (!name) return;
+      const no = prompt('Öğrenci Numarası (örn: 20239900):', '202399' + Math.floor(Math.random() * 90 + 10));
+      
+      attendanceList.unshift({
+        id: no,
+        name: name,
+        dept: 'Bilgisayar Müh.',
+        time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+        method: 'Manuel (Öğr. Üyesi)',
+        status: 'attended'
+      });
+      renderAttendanceTable();
+      showToast(`${name} listeye eklendi ve derse katıldı olarak işaretlendi.`, 'success');
+    }
+
+    function lockAndApproveAttendance() {
+      playSound('success');
+      const attended = document.getElementById('stat-attended-count').innerText;
+      showToast(`Yoklama kilitlendi! ${attended} öğrenci başarıyla ÖBS veri tabanına aktarıldı.`, 'success');
+    }
+
+    function openProjectionModal() {
+      document.getElementById('modal-projection').classList.remove('hidden');
+    }
+
+    function closeProjectionModal() {
+      document.getElementById('modal-projection').classList.add('hidden');
+    }
+
+    /* ----------------------------------------------------
+       DYNAMIC PROJECTION OTP TICKER
+       ---------------------------------------------------- */
+    let otpCountdown = 30;
+    function startOtpTicker() {
+      setInterval(() => {
+        otpCountdown--;
+        if (otpCountdown <= 0) {
+          otpCountdown = 30;
+          const token = '#' + Math.floor(100 + Math.random() * 900) + '-' + Math.random().toString(36).substring(2, 5).toUpperCase();
+          document.getElementById('dynamic-otp-text').innerText = `OTP-TOKEN: ${token} (30 sn)`;
+        } else {
+          const currentText = document.getElementById('dynamic-otp-text').innerText.split('(')[0];
+          document.getElementById('dynamic-otp-text').innerText = `${currentText}(${otpCountdown} sn)`;
+        }
+      }, 1000);
+    }
+
+    /* ----------------------------------------------------
+       GHOST LOGS & ISSUE MANAGEMENT (EVENT VIEWER STYLE)
+       ---------------------------------------------------- */
+    function renderGhostLogs() {
+      const container = document.getElementById('ghost-logs-container');
+      container.innerHTML = '';
+
+      ghostLogs.forEach(log => {
+        const item = document.createElement('div');
+        item.className = 'p-2 rounded bg-white border border-[#ccd7e2] text-xs flex items-start space-x-2 shadow-sm';
+        item.innerHTML = `
+          <span class="win7-badge win7-badge-amber text-[10px] shrink-0 mt-0.5">${log.time}</span>
+          <div class="flex-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800">Masa ${log.desk}</span>
+              <span class="text-[10px] text-slate-500 font-mono">Öğr: ${log.user}</span>
+            </div>
+            <p class="text-[11px] text-slate-600 mt-0.5">${log.note}</p>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderIssuesList() {
+      const container = document.getElementById('issues-list-container');
+      container.innerHTML = '';
+
+      issuesList.forEach((issue, idx) => {
+        let statusTag = '<span class="win7-badge win7-badge-red">Açık</span>';
+        if (issue.status === 'in_progress') statusTag = '<span class="win7-badge win7-badge-amber">İşlemde</span>';
+        else if (issue.status === 'resolved') statusTag = '<span class="win7-badge win7-badge-green">Çözüldü</span>';
+
+        const item = document.createElement('div');
+        item.className = 'p-2.5 rounded bg-white border border-[#ccd7e2] text-xs space-y-1 shadow-sm';
+        item.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-800">${issue.type} &bull; <span class="text-blue-700 font-normal">${issue.loc}</span></span>
+            ${statusTag}
+          </div>
+          <p class="text-[11px] text-slate-600">${issue.desc}</p>
+          <div class="flex items-center justify-end space-x-2 pt-1">
+            ${issue.status !== 'resolved' ? `
+              <button onclick="resolveIssue(${idx})" class="win7-btn text-[10px] !py-0.5 !px-2">
+                ✓ Çözüldü Olarak İşaretle
+              </button>
+            ` : ''}
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function resolveIssue(index) {
+      playSound('success');
+      issuesList[index].status = 'resolved';
+      renderIssuesList();
+      showToast('Arıza kaydı çözüldü olarak arşivlendi.', 'success');
+    }
+
+    function createIssueModal() {
+      document.getElementById('modal-issue').classList.remove('hidden');
+    }
+
+    function closeIssueModal() {
+      document.getElementById('modal-issue').classList.add('hidden');
+    }
+
+    function reportIssueForDesk(deskId) {
+      document.getElementById('new-issue-location').value = `Masa ${deskId} (Kütüphane)`;
+      createIssueModal();
+    }
+
+    function submitNewIssue() {
+      const loc = document.getElementById('new-issue-location').value;
+      const type = document.getElementById('new-issue-type').value;
+      const desc = document.getElementById('new-issue-desc').value || 'Kullanıcı tarafından bildirilen teknik arıza.';
+
+      issuesList.unshift({
+        id: Date.now(),
+        loc: loc,
+        type: type,
+        desc: desc,
+        status: 'open',
+        priority: 'high'
+      });
+
+      closeIssueModal();
+      renderIssuesList();
+      showToast('Arıza kaydı oluşturuldu ve saha ekiplerine iletildi.', 'success');
+    }
+
+    /* ----------------------------------------------------
+       TIMERS & HELPERS
+       ---------------------------------------------------- */
+    function startSessionTimer() {
+      setInterval(() => {
+        if (studentSession.isSeated) {
+          const diff = Math.floor((Date.now() - studentSession.startTime) / 1000);
+          document.getElementById('session-elapsed').innerText = formatHMS(diff);
+
+          if (studentSession.inBreak) {
+            studentSession.breakSecondsRemaining--;
+            if (studentSession.breakSecondsRemaining <= 0) {
+              simulateGhostTimeout();
+            } else {
+              document.getElementById('break-countdown').innerText = formatSeconds(studentSession.breakSecondsRemaining);
+            }
+          }
+        }
+
+        desks.forEach(d => {
+          if (d.status === 'ghost_warning' && d.breakTime > 0) {
+            d.breakTime--;
+            if (d.breakTime <= 0) {
+              d.status = 'available';
+              d.user = null;
+              ghostLogs.unshift({
+                id: Date.now(),
+                time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+                desk: d.id,
+                user: 'Sistem',
+                note: '15 dk mola süresi tamamlandı. Masa otomatik olarak yeni kullanıma açıldı.'
+              });
+              renderGhostLogs();
+              renderDesks();
+            }
+          }
+        });
+      }, 1000);
+    }
+
+    function formatSeconds(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function formatHMS(totalSeconds) {
+      const h = Math.floor(totalSeconds / 3600);
+      const m = Math.floor((totalSeconds % 3600) / 60);
+      const s = totalSeconds % 60;
+      return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    /* ----------------------------------------------------
+       WINDOWS 7 BALLOON NOTIFICATION (TOAST)
+       ---------------------------------------------------- */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      
+      let title = 'UniPass Bilgilendirme';
+      let icon = 'ℹ️';
+
+      if (type === 'success') {
+        title = 'İşlem Başarılı';
+        icon = '✅';
+      } else if (type === 'warning') {
+        title = 'UniPass Uyarı';
+        icon = '⚠️';
+      } else if (type === 'error') {
+        title = 'Güvenlik / Zaman Aşımı';
+        icon = '🚨';
+      }
+
+      toast.className = `win7-balloon p-3 pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0`;
+      toast.innerHTML = `
+        <div class="flex items-center justify-between pb-1 mb-1 border-b border-slate-300/60 font-bold text-blue-900 text-[11px]">
+          <span class="flex items-center space-x-1">
+            <span>${icon}</span>
+            <span>${title}</span>
+          </span>
+          <span class="text-slate-400 hover:text-slate-700 cursor-pointer font-normal text-xs" onclick="this.parentElement.parentElement.remove()">✕</span>
+        </div>
+        <div class="text-[11px] text-slate-700 leading-snug">${message}</div>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 20);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 350);
+      }, 4800);
+    }
+  </script>
+</body>
+</html>
