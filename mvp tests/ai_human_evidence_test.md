@@ -13,7 +13,7 @@
 ## 3. İnsan Kararı ve Doğrulama Tablosu (Human-in-the-Loop)
 
 | Test / İnceleme Alanı | AI'nın Çıktısı / Bulgusu | İnsan Kararı ve Doğrulaması | 
-|---|---|---|---|
+|---|---|---|
 | **TEST-L1** (Rol & Sekme Geçişi) | Rol ve sekme geçişlerinin çalıştığı; ancak alt görev çubuğunun (Superbar) senkronize olmadığı ve RBAC kısıtı bulunmadığı raporlandı. | Prototip kapsamının simülasyon olduğu göz önünde bulundurularak bulgu test raporuna eklendi; sonraki iterasyon için not alındı. | 
 | **TEST-L2** (Masa Filtreleme) | Filtrelerin `AND` mantığıyla çalıştığı; ancak `updateStatsSummary()` fonksiyonunun filtrelenmiş veri yerine tüm listeyi baz aldığı tespit edildi. | İstatistik hesaplama mantığı ve erken dönüş (`early return`) notu rapora işlendi. | 
 | **TEST-M1** (15 Dk Mola Akışı) | Mola state ve sayacının güncellendiği; ancak `isMine` kontrolünün `ghost_warning` temasını görsel olarak ezdiği belirtildi. | Mola ve görsel öncelik davranışı kayıt altına alındı. | 
